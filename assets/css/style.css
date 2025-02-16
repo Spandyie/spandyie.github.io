@@ -108,15 +108,50 @@ footer {
 .profile-img {
     width: 100%;
     border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.bio {
+    color: #333;
 }
 
 .bio h2 {
     margin: 1.5rem 0 1rem;
+    color: #2c3e50;
+    border-bottom: 2px solid #3498db;
+    padding-bottom: 0.5rem;
+}
+
+.bio h2:first-child {
+    margin-top: 0;
+}
+
+.bio p {
+    line-height: 1.6;
+    margin-bottom: 1rem;
 }
 
 .bio ul {
     list-style: disc;
     margin-left: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.bio ul li {
+    margin-bottom: 0.5rem;
+    line-height: 1.4;
+}
+
+/* Responsive design for smaller screens */
+@media (max-width: 768px) {
+    .profile {
+        grid-template-columns: 1fr;
+    }
+    
+    .profile-img {
+        max-width: 300px;
+        margin: 0 auto;
+    }
 }
 
 /* Project styles */
