@@ -190,9 +190,49 @@
     .tag { font-size: 0.7rem; border: 1px solid var(--green-dim); padding: 1px 6px; color: var(--green-dim); }
 
     /* Contact */
-    .contact-row { display: flex; gap: 2rem; flex-wrap: wrap; }
+    .contact-row { display: flex; gap: 2rem; flex-wrap: wrap; margin-bottom: 1.2rem; }
     .contact-item { display: flex; align-items: center; gap: 0.5rem; }
     .contact-item .icon { font-size: 1rem; }
+
+    /* Contact form */
+    .contact-form { display: flex; flex-direction: column; gap: 0.6rem; margin-top: 0.5rem; }
+    .contact-form input,
+    .contact-form textarea {
+      background: #0a120a;
+      border: 1px solid var(--green-dim);
+      color: var(--green);
+      font-family: inherit;
+      font-size: 0.88rem;
+      padding: 0.5rem 0.75rem;
+      outline: none;
+      resize: vertical;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .contact-form input:focus,
+    .contact-form textarea:focus {
+      border-color: var(--green);
+      box-shadow: 0 0 8px var(--green-glow);
+    }
+    .contact-form input::placeholder,
+    .contact-form textarea::placeholder { color: #3a6e3a; }
+    .contact-form textarea { min-height: 100px; }
+    .contact-form button {
+      align-self: flex-start;
+      background: transparent;
+      border: 1px solid var(--green);
+      color: var(--green);
+      font-family: inherit;
+      font-size: 0.88rem;
+      padding: 0.4rem 1.2rem;
+      cursor: pointer;
+      transition: background 0.2s, box-shadow 0.2s;
+    }
+    .contact-form button:hover {
+      background: rgba(0,255,65,0.1);
+      box-shadow: 0 0 10px var(--green-glow);
+    }
+    .contact-form button:disabled { opacity: 0.5; cursor: not-allowed; }
+    #form-status { font-size: 0.82rem; min-height: 1.2rem; }
 
     /* Input prompt at bottom */
     .input-row {
@@ -329,10 +369,24 @@
     </div>
     <div class="output">
       <div class="contact-row">
-        <div class="contact-item"><span class="icon">✉</span><a href="mailto:email@spandanm.com">email@spandanm.com</a></div>
         <div class="contact-item"><span class="icon">⌥</span><a href="https://github.com/Spandyie" target="_blank">github.com/Spandyie</a></div>
         <div class="contact-item"><span class="icon">◈</span><a href="https://spandyie.github.io" target="_blank">spandyie.github.io</a></div>
       </div>
+    </div>
+
+    <!-- send_message -->
+    <div class="prompt-line">
+      <span class="ps1">guest@spandan <em>~</em> $</span>
+      <span class="cmd">send_message --to spandan</span>
+    </div>
+    <div class="output">
+      <form class="contact-form" id="contact-form">
+        <input type="text" name="name" placeholder="your name" required autocomplete="off">
+        <input type="email" name="email" placeholder="your email" required autocomplete="off">
+        <textarea name="message" placeholder="your message" required></textarea>
+        <button type="submit" id="form-btn">[ TRANSMIT ]</button>
+        <span id="form-status"></span>
+      </form>
     </div>
 
     <!-- Interactive CLI -->
@@ -430,6 +484,38 @@
       if (result !== null) response.textContent = '> ' + (result || '');
     } else {
       response.textContent = `> command not found: ${val}. try 'help'`;
+    }
+  });
+
+  // ── Contact form ──
+  const FORMSPREE_URL = 'https://formspree.io/f/mvzbwbjd';
+  document.getElementById('contact-form').addEventListener('submit', async e => {
+    e.preventDefault();
+    const btn = document.getElementById('form-btn');
+    const status = document.getElementById('form-status');
+    btn.disabled = true;
+    btn.textContent = '[ TRANSMITTING... ]';
+    status.style.color = 'var(--green-dim)';
+    status.textContent = '';
+    try {
+      const res = await fetch(FORMSPREE_URL, {
+        method: 'POST',
+        headers: { 'Accept': 'application/json' },
+        body: new FormData(e.target)
+      });
+      if (res.ok) {
+        status.style.color = 'var(--green)';
+        status.textContent = '> message transmitted. I\'ll respond soon.';
+        e.target.reset();
+        btn.textContent = '[ SENT ]';
+      } else {
+        throw new Error();
+      }
+    } catch {
+      status.style.color = '#ff4444';
+      status.textContent = '> transmission failed. try again.';
+      btn.disabled = false;
+      btn.textContent = '[ TRANSMIT ]';
     }
   });
 
