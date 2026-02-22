@@ -1,57 +1,461 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Dr. Spandan Mishra - Data Science Leader and AI Researcher">
-    <title>Dr. Spandan Mishra - AI Scientist & Data Science Leader</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="assets/css/style.css">
-    <!-- Updated design - 2024 -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dr. Spandan Mishra // TERMINAL</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --green: #00ff41;
+      --green-dim: #00cc33;
+      --green-glow: rgba(0, 255, 65, 0.4);
+      --bg: #0a0a0a;
+      --bg2: #0f1a0f;
+    }
+
+    html, body {
+      height: 100%;
+      background: var(--bg);
+      color: var(--green);
+      font-family: 'Share Tech Mono', 'Courier New', monospace;
+      overflow-x: hidden;
+    }
+
+    /* CRT scanlines */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(0,0,0,0.15) 2px,
+        rgba(0,0,0,0.15) 4px
+      );
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    /* CRT vignette */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(ellipse at center, transparent 60%, rgba(0,0,0,0.7) 100%);
+      pointer-events: none;
+      z-index: 9998;
+    }
+
+    /* Screen flicker */
+    @keyframes flicker {
+      0%, 95%, 100% { opacity: 1; }
+      96% { opacity: 0.92; }
+      97% { opacity: 1; }
+      98% { opacity: 0.95; }
+    }
+    body { animation: flicker 8s infinite; }
+
+    /* ─── LAYOUT ─── */
+    .terminal {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem 4rem;
+      min-height: 100vh;
+    }
+
+    /* ─── HEADER BAR ─── */
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--green-dim);
+      padding-bottom: 0.5rem;
+      margin-bottom: 2rem;
+      font-size: 0.75rem;
+      color: var(--green-dim);
+    }
+    .topbar .dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--green); box-shadow: 0 0 6px var(--green-glow); margin-right: 4px; }
+
+    /* ─── BOOT SEQUENCE ─── */
+    #boot {
+      line-height: 1.8;
+      font-size: 0.85rem;
+    }
+    #boot .line { display: block; color: var(--green-dim); }
+    #boot .line.bright { color: var(--green); }
+    #boot .line.warn { color: #ffcc00; }
+
+    /* ─── MAIN CONTENT ─── */
+    #main { display: none; }
+
+    /* Hero */
+    .hero {
+      margin: 3rem 0 2.5rem;
+      text-align: center;
+    }
+    .hero-name {
+      font-size: clamp(2.5rem, 8vw, 5rem);
+      letter-spacing: 0.15em;
+      text-shadow: 0 0 20px var(--green-glow), 0 0 40px var(--green-glow);
+      line-height: 1;
+    }
+    .hero-tag {
+      margin-top: 0.75rem;
+      font-size: 1rem;
+      color: var(--green-dim);
+      letter-spacing: 0.1em;
+    }
+    .hero-tag span { color: var(--green); }
+
+    /* Cursor blink */
+    @keyframes blink { 50% { opacity: 0; } }
+    .cursor {
+      display: inline-block;
+      width: 0.6em;
+      height: 1.1em;
+      background: var(--green);
+      vertical-align: text-bottom;
+      animation: blink 1s step-end infinite;
+    }
+
+    /* ─── DIVIDER ─── */
+    .divider {
+      border: none;
+      border-top: 1px dashed var(--green-dim);
+      margin: 2rem 0;
+      opacity: 0.4;
+    }
+
+    /* ─── PROMPT SECTIONS ─── */
+    .prompt-line {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.5rem;
+      margin-bottom: 0.4rem;
+    }
+    .ps1 { color: var(--green-dim); white-space: nowrap; flex-shrink: 0; }
+    .ps1 em { color: var(--green); font-style: normal; }
+    .cmd { color: var(--green); }
+
+    .output {
+      margin: 0.5rem 0 1.8rem 1.5rem;
+      line-height: 1.9;
+      font-size: 0.92rem;
+    }
+    .output p { color: #b0d4b0; }
+    .output .key { color: var(--green); min-width: 120px; display: inline-block; }
+    .output a { color: var(--green); text-decoration: none; border-bottom: 1px dashed var(--green-dim); }
+    .output a:hover { text-shadow: 0 0 8px var(--green-glow); }
+
+    /* Skill bars */
+    .skill-row { display: flex; align-items: center; gap: 1rem; margin-bottom: 0.5rem; font-size: 0.85rem; }
+    .skill-name { color: var(--green-dim); width: 120px; flex-shrink: 0; }
+    .skill-bar { flex: 1; height: 10px; background: #0f2010; border: 1px solid var(--green-dim); position: relative; overflow: hidden; }
+    .skill-fill {
+      height: 100%;
+      background: var(--green);
+      box-shadow: 0 0 6px var(--green-glow);
+      width: 0;
+      transition: width 1.4s cubic-bezier(0.4,0,0.2,1);
+    }
+    .skill-pct { color: var(--green); width: 35px; text-align: right; flex-shrink: 0; }
+
+    /* Project cards */
+    .projects-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1rem; margin-top: 0.5rem; }
+    .project-card {
+      border: 1px solid var(--green-dim);
+      padding: 1rem;
+      position: relative;
+      transition: box-shadow 0.2s;
+    }
+    .project-card:hover {
+      box-shadow: 0 0 12px var(--green-glow);
+      border-color: var(--green);
+    }
+    .project-card::before {
+      content: '//';
+      position: absolute;
+      top: 0.6rem; right: 0.8rem;
+      color: var(--green-dim);
+      font-size: 0.75rem;
+    }
+    .project-title { color: var(--green); font-size: 0.95rem; margin-bottom: 0.4rem; }
+    .project-desc { color: #7aaa7a; font-size: 0.8rem; line-height: 1.5; }
+    .project-tags { margin-top: 0.6rem; display: flex; flex-wrap: wrap; gap: 0.3rem; }
+    .tag { font-size: 0.7rem; border: 1px solid var(--green-dim); padding: 1px 6px; color: var(--green-dim); }
+
+    /* Contact */
+    .contact-row { display: flex; gap: 2rem; flex-wrap: wrap; }
+    .contact-item { display: flex; align-items: center; gap: 0.5rem; }
+    .contact-item .icon { font-size: 1rem; }
+
+    /* Input prompt at bottom */
+    .input-row {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-top: 3rem;
+      border-top: 1px solid var(--green-dim);
+      padding-top: 1rem;
+    }
+    .input-row .ps1 { color: var(--green); }
+    #cli-input {
+      flex: 1;
+      background: transparent;
+      border: none;
+      outline: none;
+      color: var(--green);
+      font-family: inherit;
+      font-size: 1rem;
+      caret-color: var(--green);
+    }
+    #cli-response {
+      margin-top: 0.5rem;
+      min-height: 1.5rem;
+      font-size: 0.85rem;
+      color: var(--green-dim);
+      padding-left: 1.5rem;
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--green-dim); }
+
+    @media (max-width: 480px) {
+      .contact-row { flex-direction: column; gap: 0.8rem; }
+      .projects-grid { grid-template-columns: 1fr; }
+    }
+  </style>
 </head>
 <body>
-    <nav>
-        <ul>
-            <li><a href="index.html" class="active">Home</a></li>
-            <li><a href="about.html">About</a></li>
-            <li><a href="projects.html">Projects</a></li>
-            <li><a href="blog.html">Blog</a></li>
-            <li><a href="contact.html">Contact</a></li>
-        </ul>
-    </nav>
-    <main>
-        <h1>Dr. Spandan Mishra</h1>
-        <div class="intro">
-            <p class="lead">Data Science Leader & AI Researcher</p>
-            <p>Welcome to my digital portfolio! I am a Data Science leader and Statistician with a Ph.D. in Industrial Engineering, currently working at Palo Alto Networks. I specialize in developing and implementing machine learning solutions for complex business problems.</p>
+<div class="terminal">
+
+  <div class="topbar">
+    <div><span class="dot"></span>SPANDAN-OS v2.1.0 &nbsp;|&nbsp; TTY1 &nbsp;|&nbsp; Palo Alto Networks · AI Research</div>
+    <div id="clock"></div>
+  </div>
+
+  <!-- Boot sequence -->
+  <div id="boot" aria-live="polite"></div>
+
+  <!-- Main content (hidden until boot finishes) -->
+  <div id="main">
+
+    <div class="hero">
+      <div class="hero-name">DR. SPANDAN<span class="cursor"></span></div>
+      <div class="hero-tag">[ <span>AI researcher</span> · <span>data science leader</span> · <span>Ph.D. Industrial Engineering</span> ]</div>
+    </div>
+
+    <hr class="divider">
+
+    <!-- whoami -->
+    <div class="prompt-line">
+      <span class="ps1">guest@spandan <em>~</em> $</span>
+      <span class="cmd">whoami</span>
+    </div>
+    <div class="output">
+      <p>Dr. Spandan Mishra — Data Science Leader &amp; AI Researcher at Palo Alto Networks.
+      Ph.D. in Industrial Engineering. I build ML systems that solve hard, real-world problems:
+      from multi-agent LLM pipelines and context engineering to Bayesian inference and
+      structural health monitoring. Drawn to the frontier where statistics meets deep learning.</p>
+    </div>
+
+    <!-- ls skills -->
+    <div class="prompt-line">
+      <span class="ps1">guest@spandan <em>~</em> $</span>
+      <span class="cmd">ls --skills</span>
+    </div>
+    <div class="output" id="skills-output">
+      <div class="skill-row"><span class="skill-name">Python / PyTorch</span><div class="skill-bar"><div class="skill-fill" data-w="95"></div></div><span class="skill-pct">95%</span></div>
+      <div class="skill-row"><span class="skill-name">LLMs / Agents</span><div class="skill-bar"><div class="skill-fill" data-w="90"></div></div><span class="skill-pct">90%</span></div>
+      <div class="skill-row"><span class="skill-name">Bayesian Stats</span><div class="skill-bar"><div class="skill-fill" data-w="88"></div></div><span class="skill-pct">88%</span></div>
+      <div class="skill-row"><span class="skill-name">Deep Learning</span><div class="skill-bar"><div class="skill-fill" data-w="85"></div></div><span class="skill-pct">85%</span></div>
+      <div class="skill-row"><span class="skill-name">C++ / Systems</span><div class="skill-bar"><div class="skill-fill" data-w="70"></div></div><span class="skill-pct">70%</span></div>
+      <div class="skill-row"><span class="skill-name">Data Engineering</span><div class="skill-bar"><div class="skill-fill" data-w="80"></div></div><span class="skill-pct">80%</span></div>
+    </div>
+
+    <!-- ls projects -->
+    <div class="prompt-line">
+      <span class="ps1">guest@spandan <em>~</em> $</span>
+      <span class="cmd">ls ./projects</span>
+    </div>
+    <div class="output">
+      <div class="projects-grid">
+        <div class="project-card">
+          <div class="project-title"><a href="https://github.com/Spandyie/agent-as-judge" target="_blank">agent-as-judge</a></div>
+          <div class="project-desc">Multi-agent document evaluation pipeline. Three specialized AI agents — Researcher, Analyzer, Judge — score your docs against industry benchmarks. Runs fully local via Ollama.</div>
+          <div class="project-tags"><span class="tag">CrewAI</span><span class="tag">Ollama</span><span class="tag">Llama 3.1</span><span class="tag">Python</span></div>
         </div>
-        <div class="featured">
-            <h2>Featured Research Areas</h2>
-            <div class="research-grid">
-                <div class="research-card">
-                    <h3>🤖 Machine Learning</h3>
-                    <p>Advanced algorithms and deep learning applications for real-world problems.</p>
-                </div>
-                <div class="research-card">
-                    <h3>📊 Statistical Analysis</h3>
-                    <p>Data-driven insights and probabilistic modeling for decision making.</p>
-                </div>
-                <div class="research-card">
-                    <h3>🧠 Neural Networks</h3>
-                    <p>Cutting-edge neural network architectures and their applications.</p>
-                </div>
-                <div class="research-card">
-                    <h3>🔬 Research Publications</h3>
-                    <p>Published work in multi-sensor decision fusion and damage detection.</p>
-                </div>
-            </div>
+        <div class="project-card">
+          <div class="project-title"><a href="https://github.com/Spandyie/Agentic-Context-Engineering" target="_blank">Agentic-Context-Engineering</a></div>
+          <div class="project-desc">Implementation of the ACE loop — a continuous chat system that builds a live JSONL Playbook, using FAISS semantic retrieval and reflection to grow smarter with every interaction.</div>
+          <div class="project-tags"><span class="tag">Streamlit</span><span class="tag">FAISS</span><span class="tag">OpenAI</span><span class="tag">Python</span></div>
         </div>
-    </main>
-    <footer>
-        <p>&copy; 2024 Dr. Spandan Mishra. All rights reserved.</p>
-    </footer>
-    <script src="assets/js/main.js"></script>
+        <div class="project-card">
+          <div class="project-title"><a href="https://github.com/Spandyie/ParticleFilter" target="_blank">ParticleFilter</a> ⭐7</div>
+          <div class="project-desc">Sequential Monte Carlo particle filter for predicting remaining structural life using the Pari–Erdogan fatigue law. Applied to structural health monitoring (SHM).</div>
+          <div class="project-tags"><span class="tag">Python</span><span class="tag">Bayesian</span><span class="tag">SHM</span></div>
+        </div>
+        <div class="project-card">
+          <div class="project-title"><a href="https://github.com/Spandyie/Deep-SHM" target="_blank">Deep-SHM</a> ⭐4</div>
+          <div class="project-desc">Applying deep neural networks to Structural Health Monitoring — a domain previously limited by scarce labeled data. Explores transfer learning and data augmentation strategies.</div>
+          <div class="project-tags"><span class="tag">PyTorch</span><span class="tag">Deep Learning</span><span class="tag">SHM</span></div>
+        </div>
+        <div class="project-card">
+          <div class="project-title"><a href="https://github.com/Spandyie/miniature-fortnight" target="_blank">miniature-fortnight</a></div>
+          <div class="project-desc">Twitter data-mining pipeline with LSTM-based text generation. Trained on tweet corpora and served via a Flask web app — one of the earlier explorations in NLP.</div>
+          <div class="project-tags"><span class="tag">LSTM</span><span class="tag">NLP</span><span class="tag">Flask</span><span class="tag">Python</span></div>
+        </div>
+        <div class="project-card">
+          <div class="project-title"><a href="https://github.com/Spandyie/automatic-waffle" target="_blank">automatic-waffle</a> ⭐2</div>
+          <div class="project-desc">Genetic Algorithm library written in Modern C++. Clean, header-based implementation designed for optimization problems, built for performance and extensibility.</div>
+          <div class="project-tags"><span class="tag">C++</span><span class="tag">Optimization</span><span class="tag">Algorithms</span></div>
+        </div>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <!-- contact -->
+    <div class="prompt-line">
+      <span class="ps1">guest@spandan <em>~</em> $</span>
+      <span class="cmd">cat contact.txt</span>
+    </div>
+    <div class="output">
+      <div class="contact-row">
+        <div class="contact-item"><span class="icon">⌥</span><a href="https://github.com/Spandyie" target="_blank">github.com/Spandyie</a></div>
+        <div class="contact-item"><span class="icon">◈</span><a href="https://spandyie.github.io" target="_blank">spandyie.github.io</a></div>
+      </div>
+    </div>
+
+    <!-- Interactive CLI -->
+    <div class="input-row">
+      <span class="ps1">guest@spandan ~ $</span>
+      <input id="cli-input" type="text" autocomplete="off" spellcheck="false" placeholder="type a command…" aria-label="terminal input">
+    </div>
+    <div id="cli-response"></div>
+
+  </div><!-- /#main -->
+</div><!-- /.terminal -->
+
+<script>
+  // ── Clock ──
+  function updateClock() {
+    const now = new Date();
+    document.getElementById('clock').textContent =
+      now.toISOString().replace('T',' ').slice(0,19) + ' UTC';
+  }
+  updateClock(); setInterval(updateClock, 1000);
+
+  // ── Boot sequence ──
+  const bootLines = [
+    { text: 'SPANDAN-OS v2.1.0 (tty1)', cls: 'bright' },
+    { text: 'Copyright (c) 2026 Spandan. All rights reserved.', cls: '' },
+    { text: '', cls: '' },
+    { text: '[    0.001] Initializing kernel modules...', cls: '' },
+    { text: '[    0.048] Loading identity.conf', cls: '' },
+    { text: '[    0.112] Mounting filesystem: /projects ... OK', cls: '' },
+    { text: '[    0.189] Mounting filesystem: /skills ... OK', cls: '' },
+    { text: '[    0.234] Mounting filesystem: /contact ... OK', cls: '' },
+    { text: '[    0.301] Starting curiosity daemon ... OK', cls: '' },
+    { text: '[    0.388] Checking for bugs ... 0 critical, 3 interesting', cls: 'warn' },
+    { text: '[    0.421] Network: connected to internet', cls: '' },
+    { text: '', cls: '' },
+    { text: 'System ready. Welcome, guest.', cls: 'bright' },
+    { text: '', cls: '' },
+  ];
+
+  const bootEl = document.getElementById('boot');
+  let i = 0;
+  function addBootLine() {
+    if (i >= bootLines.length) {
+      setTimeout(() => {
+        bootEl.style.display = 'none';
+        document.getElementById('main').style.display = 'block';
+        animateSkillBars();
+      }, 200);
+      return;
+    }
+    const l = bootLines[i++];
+    const span = document.createElement('span');
+    span.className = 'line' + (l.cls ? ' ' + l.cls : '');
+    span.textContent = l.text || '\u00a0';
+    bootEl.appendChild(span);
+    setTimeout(addBootLine, l.text === '' ? 60 : 55 + Math.random() * 80);
+  }
+  addBootLine();
+
+  // ── Skill bar animation ──
+  function animateSkillBars() {
+    document.querySelectorAll('.skill-fill').forEach(el => {
+      setTimeout(() => { el.style.width = el.dataset.w + '%'; }, 200);
+    });
+  }
+
+  // ── Interactive CLI ──
+  const commands = {
+    help: () => `available: help · whoami · skills · projects · contact · clear · matrix`,
+    whoami: () => `Dr. Spandan Mishra — Data Science Leader & AI Researcher @ Palo Alto Networks. Ph.D. Industrial Engineering.`,
+    skills: () => `Python/PyTorch · LLMs/Agents · Bayesian Stats · Deep Learning · C++ · Data Engineering`,
+    projects: () => `agent-as-judge · Agentic-Context-Engineering · ParticleFilter · Deep-SHM · miniature-fortnight · automatic-waffle\nscroll up to see details`,
+    contact: () => `github.com/Spandyie | spandyie.github.io`,
+    clear: () => { document.getElementById('cli-response').textContent = ''; return null; },
+    matrix: () => { startMatrix(); return 'initiating…'; },
+    ls: () => `projects  skills  contact  README.md`,
+    pwd: () => `/home/spandan`,
+    date: () => new Date().toString(),
+    uname: () => `SPANDAN-OS v2.1.0 Darwin arm64`,
+    coffee: () => `☕ brewing... done. productivity +20%`,
+    sudo: () => `Nice try.`,
+  };
+
+  const input = document.getElementById('cli-input');
+  const response = document.getElementById('cli-response');
+
+  input.addEventListener('keydown', e => {
+    if (e.key !== 'Enter') return;
+    const val = input.value.trim().toLowerCase().split(' ')[0];
+    input.value = '';
+    if (!val) return;
+    const fn = commands[val];
+    if (fn) {
+      const result = fn();
+      if (result !== null) response.textContent = '> ' + (result || '');
+    } else {
+      response.textContent = `> command not found: ${val}. try 'help'`;
+    }
+  });
+
+  // ── Matrix easter egg ──
+  function startMatrix() {
+    const canvas = document.createElement('canvas');
+    canvas.style.cssText = 'position:fixed;inset:0;z-index:9000;cursor:pointer;';
+    canvas.width = window.innerWidth; canvas.height = window.innerHeight;
+    document.body.appendChild(canvas);
+    const ctx = canvas.getContext('2d');
+    const cols = Math.floor(canvas.width / 16);
+    const drops = Array(cols).fill(1);
+    const chars = 'アイウエオカキクケコサシスセソタチツテト0123456789ABCDEF';
+    const id = setInterval(() => {
+      ctx.fillStyle = 'rgba(0,0,0,0.05)';
+      ctx.fillRect(0,0,canvas.width,canvas.height);
+      ctx.fillStyle = '#00ff41';
+      ctx.font = '14px monospace';
+      drops.forEach((y,i) => {
+        ctx.fillText(chars[Math.floor(Math.random()*chars.length)], i*16, y*16);
+        if (y*16 > canvas.height && Math.random() > 0.975) drops[i] = 0;
+        drops[i]++;
+      });
+    }, 40);
+    canvas.addEventListener('click', () => { clearInterval(id); canvas.remove(); });
+    setTimeout(() => { clearInterval(id); canvas.remove(); }, 8000);
+  }
+</script>
 </body>
-</html> 
+</html>
