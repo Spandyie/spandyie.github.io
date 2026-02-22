@@ -1,414 +1,203 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dr. Spandan Mishra // TERMINAL</title>
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+---
+layout: default
+title: Dr. Spandan Mishra // TERMINAL
+---
 
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+<style>
+  /* ─── BOOT SEQUENCE ─── */
+  #boot { line-height: 1.8; font-size: 0.85rem; }
+  #boot .line { display: block; color: var(--green-dim); }
+  #boot .line.bright { color: var(--green); }
+  #boot .line.warn { color: #ffcc00; }
 
-    :root {
-      --green: #00ff41;
-      --green-dim: #00cc33;
-      --green-glow: rgba(0, 255, 65, 0.4);
-      --bg: #0a0a0a;
-      --bg2: #0f1a0f;
-    }
+  #main { display: none; }
 
-    html, body {
-      height: 100%;
-      background: var(--bg);
-      color: var(--green);
-      font-family: 'Share Tech Mono', 'Courier New', monospace;
-      overflow-x: hidden;
-    }
+  /* Hero */
+  .hero { margin: 3rem 0 2.5rem; text-align: center; }
+  .hero-name {
+    font-size: clamp(1.6rem, 5vw, 3.5rem);
+    letter-spacing: 0.15em;
+    text-shadow: 0 0 20px var(--green-glow), 0 0 40px var(--green-glow);
+    line-height: 1;
+  }
+  .hero-tag { margin-top: 0.75rem; font-size: 1rem; color: var(--green-dim); letter-spacing: 0.1em; }
+  .hero-tag span { color: var(--green); }
 
-    /* CRT scanlines */
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background: repeating-linear-gradient(
-        0deg,
-        transparent,
-        transparent 2px,
-        rgba(0,0,0,0.15) 2px,
-        rgba(0,0,0,0.15) 4px
-      );
-      pointer-events: none;
-      z-index: 9999;
-    }
+  /* Skill bars */
+  .skill-row { display: flex; align-items: center; gap: 1rem; margin-bottom: 0.5rem; font-size: 0.85rem; }
+  .skill-name { color: var(--green-dim); width: 140px; flex-shrink: 0; }
+  .skill-bar { flex: 1; height: 10px; background: #0f2010; border: 1px solid var(--green-dim); overflow: hidden; }
+  .skill-fill {
+    height: 100%; background: var(--green);
+    box-shadow: 0 0 6px var(--green-glow);
+    width: 0; transition: width 1.4s cubic-bezier(0.4,0,0.2,1);
+  }
+  .skill-pct { color: var(--green); width: 35px; text-align: right; flex-shrink: 0; }
 
-    /* CRT vignette */
-    body::after {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background: radial-gradient(ellipse at center, transparent 60%, rgba(0,0,0,0.7) 100%);
-      pointer-events: none;
-      z-index: 9998;
-    }
+  /* Project cards */
+  .projects-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1rem; margin-top: 0.5rem; }
+  .project-card { border: 1px solid var(--green-dim); padding: 1rem; position: relative; transition: box-shadow 0.2s; }
+  .project-card:hover { box-shadow: 0 0 12px var(--green-glow); border-color: var(--green); }
+  .project-card::before { content: '//'; position: absolute; top: 0.6rem; right: 0.8rem; color: var(--green-dim); font-size: 0.75rem; }
+  .project-title { color: var(--green); font-size: 0.95rem; margin-bottom: 0.4rem; }
+  .project-desc { color: #7aaa7a; font-size: 0.8rem; line-height: 1.5; }
+  .project-tags { margin-top: 0.6rem; display: flex; flex-wrap: wrap; gap: 0.3rem; }
+  .tag { font-size: 0.7rem; border: 1px solid var(--green-dim); padding: 1px 6px; color: var(--green-dim); }
 
-    /* Screen flicker */
-    @keyframes flicker {
-      0%, 95%, 100% { opacity: 1; }
-      96% { opacity: 0.92; }
-      97% { opacity: 1; }
-      98% { opacity: 0.95; }
-    }
-    body { animation: flicker 8s infinite; }
+  /* Contact */
+  .contact-row { display: flex; gap: 2rem; flex-wrap: wrap; margin-bottom: 1.2rem; }
+  .contact-item { display: flex; align-items: center; gap: 0.5rem; }
 
-    /* ─── LAYOUT ─── */
-    .terminal {
-      max-width: 860px;
-      margin: 0 auto;
-      padding: 2rem 1.5rem 4rem;
-      min-height: 100vh;
-    }
+  /* Contact form */
+  .contact-form { display: flex; flex-direction: column; gap: 0.6rem; margin-top: 0.5rem; }
+  .contact-form input, .contact-form textarea {
+    background: #0a120a; border: 1px solid var(--green-dim); color: var(--green);
+    font-family: inherit; font-size: 0.88rem; padding: 0.5rem 0.75rem;
+    outline: none; resize: vertical; transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .contact-form input:focus, .contact-form textarea:focus { border-color: var(--green); box-shadow: 0 0 8px var(--green-glow); }
+  .contact-form input::placeholder, .contact-form textarea::placeholder { color: #3a6e3a; }
+  .contact-form textarea { min-height: 100px; }
+  .contact-form button {
+    align-self: flex-start; background: transparent; border: 1px solid var(--green);
+    color: var(--green); font-family: inherit; font-size: 0.88rem;
+    padding: 0.4rem 1.2rem; cursor: pointer; transition: background 0.2s, box-shadow 0.2s;
+  }
+  .contact-form button:hover { background: rgba(0,255,65,0.1); box-shadow: 0 0 10px var(--green-glow); }
+  .contact-form button:disabled { opacity: 0.5; cursor: not-allowed; }
+  #form-status { font-size: 0.82rem; min-height: 1.2rem; }
 
-    /* ─── HEADER BAR ─── */
-    .topbar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-bottom: 1px solid var(--green-dim);
-      padding-bottom: 0.5rem;
-      margin-bottom: 2rem;
-      font-size: 0.75rem;
-      color: var(--green-dim);
-    }
-    .topbar .dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--green); box-shadow: 0 0 6px var(--green-glow); margin-right: 4px; }
+  /* Interactive CLI */
+  .input-row { display: flex; align-items: center; gap: 0.5rem; margin-top: 3rem; border-top: 1px solid var(--green-dim); padding-top: 1rem; }
+  .input-row .ps1 { color: var(--green); }
+  #cli-input { flex: 1; background: transparent; border: none; outline: none; color: var(--green); font-family: inherit; font-size: 1rem; caret-color: var(--green); }
+  #cli-response { margin-top: 0.5rem; min-height: 1.5rem; font-size: 0.85rem; color: var(--green-dim); padding-left: 1.5rem; }
 
-    /* ─── BOOT SEQUENCE ─── */
-    #boot {
-      line-height: 1.8;
-      font-size: 0.85rem;
-    }
-    #boot .line { display: block; color: var(--green-dim); }
-    #boot .line.bright { color: var(--green); }
-    #boot .line.warn { color: #ffcc00; }
+  @media (max-width: 480px) {
+    .contact-row { flex-direction: column; gap: 0.8rem; }
+    .projects-grid { grid-template-columns: 1fr; }
+  }
+</style>
 
-    /* ─── MAIN CONTENT ─── */
-    #main { display: none; }
+<!-- Boot sequence -->
+<div id="boot" aria-live="polite"></div>
 
-    /* Hero */
-    .hero {
-      margin: 3rem 0 2.5rem;
-      text-align: center;
-    }
-    .hero-name {
-      font-size: clamp(1.6rem, 5vw, 3.5rem);
-      letter-spacing: 0.15em;
-      text-shadow: 0 0 20px var(--green-glow), 0 0 40px var(--green-glow);
-      line-height: 1;
-    }
-    .hero-tag {
-      margin-top: 0.75rem;
-      font-size: 1rem;
-      color: var(--green-dim);
-      letter-spacing: 0.1em;
-    }
-    .hero-tag span { color: var(--green); }
+<!-- Main content (hidden until boot finishes) -->
+<div id="main">
 
-    /* Cursor blink */
-    @keyframes blink { 50% { opacity: 0; } }
-    .cursor {
-      display: inline-block;
-      width: 0.6em;
-      height: 1.1em;
-      background: var(--green);
-      vertical-align: text-bottom;
-      animation: blink 1s step-end infinite;
-    }
-
-    /* ─── DIVIDER ─── */
-    .divider {
-      border: none;
-      border-top: 1px dashed var(--green-dim);
-      margin: 2rem 0;
-      opacity: 0.4;
-    }
-
-    /* ─── PROMPT SECTIONS ─── */
-    .prompt-line {
-      display: flex;
-      align-items: flex-start;
-      gap: 0.5rem;
-      margin-bottom: 0.4rem;
-    }
-    .ps1 { color: var(--green-dim); white-space: nowrap; flex-shrink: 0; }
-    .ps1 em { color: var(--green); font-style: normal; }
-    .cmd { color: var(--green); }
-
-    .output {
-      margin: 0.5rem 0 1.8rem 1.5rem;
-      line-height: 1.9;
-      font-size: 0.92rem;
-    }
-    .output p { color: #b0d4b0; }
-    .output .key { color: var(--green); min-width: 120px; display: inline-block; }
-    .output a { color: var(--green); text-decoration: none; border-bottom: 1px dashed var(--green-dim); }
-    .output a:hover { text-shadow: 0 0 8px var(--green-glow); }
-
-    /* Skill bars */
-    .skill-row { display: flex; align-items: center; gap: 1rem; margin-bottom: 0.5rem; font-size: 0.85rem; }
-    .skill-name { color: var(--green-dim); width: 120px; flex-shrink: 0; }
-    .skill-bar { flex: 1; height: 10px; background: #0f2010; border: 1px solid var(--green-dim); position: relative; overflow: hidden; }
-    .skill-fill {
-      height: 100%;
-      background: var(--green);
-      box-shadow: 0 0 6px var(--green-glow);
-      width: 0;
-      transition: width 1.4s cubic-bezier(0.4,0,0.2,1);
-    }
-    .skill-pct { color: var(--green); width: 35px; text-align: right; flex-shrink: 0; }
-
-    /* Project cards */
-    .projects-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1rem; margin-top: 0.5rem; }
-    .project-card {
-      border: 1px solid var(--green-dim);
-      padding: 1rem;
-      position: relative;
-      transition: box-shadow 0.2s;
-    }
-    .project-card:hover {
-      box-shadow: 0 0 12px var(--green-glow);
-      border-color: var(--green);
-    }
-    .project-card::before {
-      content: '//';
-      position: absolute;
-      top: 0.6rem; right: 0.8rem;
-      color: var(--green-dim);
-      font-size: 0.75rem;
-    }
-    .project-title { color: var(--green); font-size: 0.95rem; margin-bottom: 0.4rem; }
-    .project-desc { color: #7aaa7a; font-size: 0.8rem; line-height: 1.5; }
-    .project-tags { margin-top: 0.6rem; display: flex; flex-wrap: wrap; gap: 0.3rem; }
-    .tag { font-size: 0.7rem; border: 1px solid var(--green-dim); padding: 1px 6px; color: var(--green-dim); }
-
-    /* Contact */
-    .contact-row { display: flex; gap: 2rem; flex-wrap: wrap; margin-bottom: 1.2rem; }
-    .contact-item { display: flex; align-items: center; gap: 0.5rem; }
-    .contact-item .icon { font-size: 1rem; }
-
-    /* Contact form */
-    .contact-form { display: flex; flex-direction: column; gap: 0.6rem; margin-top: 0.5rem; }
-    .contact-form input,
-    .contact-form textarea {
-      background: #0a120a;
-      border: 1px solid var(--green-dim);
-      color: var(--green);
-      font-family: inherit;
-      font-size: 0.88rem;
-      padding: 0.5rem 0.75rem;
-      outline: none;
-      resize: vertical;
-      transition: border-color 0.2s, box-shadow 0.2s;
-    }
-    .contact-form input:focus,
-    .contact-form textarea:focus {
-      border-color: var(--green);
-      box-shadow: 0 0 8px var(--green-glow);
-    }
-    .contact-form input::placeholder,
-    .contact-form textarea::placeholder { color: #3a6e3a; }
-    .contact-form textarea { min-height: 100px; }
-    .contact-form button {
-      align-self: flex-start;
-      background: transparent;
-      border: 1px solid var(--green);
-      color: var(--green);
-      font-family: inherit;
-      font-size: 0.88rem;
-      padding: 0.4rem 1.2rem;
-      cursor: pointer;
-      transition: background 0.2s, box-shadow 0.2s;
-    }
-    .contact-form button:hover {
-      background: rgba(0,255,65,0.1);
-      box-shadow: 0 0 10px var(--green-glow);
-    }
-    .contact-form button:disabled { opacity: 0.5; cursor: not-allowed; }
-    #form-status { font-size: 0.82rem; min-height: 1.2rem; }
-
-    /* Input prompt at bottom */
-    .input-row {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      margin-top: 3rem;
-      border-top: 1px solid var(--green-dim);
-      padding-top: 1rem;
-    }
-    .input-row .ps1 { color: var(--green); }
-    #cli-input {
-      flex: 1;
-      background: transparent;
-      border: none;
-      outline: none;
-      color: var(--green);
-      font-family: inherit;
-      font-size: 1rem;
-      caret-color: var(--green);
-    }
-    #cli-response {
-      margin-top: 0.5rem;
-      min-height: 1.5rem;
-      font-size: 0.85rem;
-      color: var(--green-dim);
-      padding-left: 1.5rem;
-    }
-
-    /* Scrollbar */
-    ::-webkit-scrollbar { width: 6px; }
-    ::-webkit-scrollbar-track { background: var(--bg); }
-    ::-webkit-scrollbar-thumb { background: var(--green-dim); }
-
-    @media (max-width: 480px) {
-      .contact-row { flex-direction: column; gap: 0.8rem; }
-      .projects-grid { grid-template-columns: 1fr; }
-    }
-  </style>
-</head>
-<body>
-<div class="terminal">
-
-  <div class="topbar">
-    <div><span class="dot"></span>SPANDAN-OS v2.1.0 &nbsp;|&nbsp; TTY1 &nbsp;|&nbsp; Palo Alto Networks · AI Research</div>
-    <div id="clock"></div>
+  <div class="hero">
+    <div class="hero-name">DR. SPANDAN MISHRA<span class="cursor"></span></div>
+    <div class="hero-tag">[ <span>AI researcher</span> · <span>data science leader</span> · <span>Ph.D. Industrial Engineering</span> ]</div>
   </div>
 
-  <!-- Boot sequence -->
-  <div id="boot" aria-live="polite"></div>
+  <hr class="divider">
 
-  <!-- Main content (hidden until boot finishes) -->
-  <div id="main">
+  <!-- whoami -->
+  <div class="prompt-line">
+    <span class="ps1">guest@spandan <em>~</em> $</span>
+    <span class="cmd">whoami</span>
+  </div>
+  <div class="output">
+    <p>Dr. Spandan Mishra — Data Science Leader &amp; AI Researcher at Palo Alto Networks.
+    Ph.D. in Industrial Engineering. I build ML systems that solve hard, real-world problems:
+    from multi-agent LLM pipelines and context engineering to Bayesian inference and
+    structural health monitoring. Drawn to the frontier where statistics meets deep learning.</p>
+  </div>
 
-    <div class="hero">
-      <div class="hero-name">DR. SPANDAN MISHRA<span class="cursor"></span></div>
-      <div class="hero-tag">[ <span>AI researcher</span> · <span>data science leader</span> · <span>Ph.D. Industrial Engineering</span> ]</div>
-    </div>
+  <!-- ls skills -->
+  <div class="prompt-line">
+    <span class="ps1">guest@spandan <em>~</em> $</span>
+    <span class="cmd">ls --skills</span>
+  </div>
+  <div class="output" id="skills-output">
+    <div class="skill-row"><span class="skill-name">Python / PyTorch</span><div class="skill-bar"><div class="skill-fill" data-w="95"></div></div><span class="skill-pct">95%</span></div>
+    <div class="skill-row"><span class="skill-name">LLMs / Agents</span><div class="skill-bar"><div class="skill-fill" data-w="90"></div></div><span class="skill-pct">90%</span></div>
+    <div class="skill-row"><span class="skill-name">Bayesian Stats</span><div class="skill-bar"><div class="skill-fill" data-w="88"></div></div><span class="skill-pct">88%</span></div>
+    <div class="skill-row"><span class="skill-name">Deep Learning</span><div class="skill-bar"><div class="skill-fill" data-w="85"></div></div><span class="skill-pct">85%</span></div>
+    <div class="skill-row"><span class="skill-name">C++ / Systems</span><div class="skill-bar"><div class="skill-fill" data-w="70"></div></div><span class="skill-pct">70%</span></div>
+    <div class="skill-row"><span class="skill-name">Data Engineering</span><div class="skill-bar"><div class="skill-fill" data-w="80"></div></div><span class="skill-pct">80%</span></div>
+  </div>
 
-    <hr class="divider">
-
-    <!-- whoami -->
-    <div class="prompt-line">
-      <span class="ps1">guest@spandan <em>~</em> $</span>
-      <span class="cmd">whoami</span>
-    </div>
-    <div class="output">
-      <p>Dr. Spandan Mishra — Data Science Leader &amp; AI Researcher at Palo Alto Networks.
-      Ph.D. in Industrial Engineering. I build ML systems that solve hard, real-world problems:
-      from multi-agent LLM pipelines and context engineering to Bayesian inference and
-      structural health monitoring. Drawn to the frontier where statistics meets deep learning.</p>
-    </div>
-
-    <!-- ls skills -->
-    <div class="prompt-line">
-      <span class="ps1">guest@spandan <em>~</em> $</span>
-      <span class="cmd">ls --skills</span>
-    </div>
-    <div class="output" id="skills-output">
-      <div class="skill-row"><span class="skill-name">Python / PyTorch</span><div class="skill-bar"><div class="skill-fill" data-w="95"></div></div><span class="skill-pct">95%</span></div>
-      <div class="skill-row"><span class="skill-name">LLMs / Agents</span><div class="skill-bar"><div class="skill-fill" data-w="90"></div></div><span class="skill-pct">90%</span></div>
-      <div class="skill-row"><span class="skill-name">Bayesian Stats</span><div class="skill-bar"><div class="skill-fill" data-w="88"></div></div><span class="skill-pct">88%</span></div>
-      <div class="skill-row"><span class="skill-name">Deep Learning</span><div class="skill-bar"><div class="skill-fill" data-w="85"></div></div><span class="skill-pct">85%</span></div>
-      <div class="skill-row"><span class="skill-name">C++ / Systems</span><div class="skill-bar"><div class="skill-fill" data-w="70"></div></div><span class="skill-pct">70%</span></div>
-      <div class="skill-row"><span class="skill-name">Data Engineering</span><div class="skill-bar"><div class="skill-fill" data-w="80"></div></div><span class="skill-pct">80%</span></div>
-    </div>
-
-    <!-- ls projects -->
-    <div class="prompt-line">
-      <span class="ps1">guest@spandan <em>~</em> $</span>
-      <span class="cmd">ls ./projects</span>
-    </div>
-    <div class="output">
-      <div class="projects-grid">
-        <div class="project-card">
-          <div class="project-title"><a href="https://github.com/Spandyie/agent-as-judge" target="_blank">agent-as-judge</a></div>
-          <div class="project-desc">Multi-agent document evaluation pipeline. Three specialized AI agents — Researcher, Analyzer, Judge — score your docs against industry benchmarks. Runs fully local via Ollama.</div>
-          <div class="project-tags"><span class="tag">CrewAI</span><span class="tag">Ollama</span><span class="tag">Llama 3.1</span><span class="tag">Python</span></div>
-        </div>
-        <div class="project-card">
-          <div class="project-title"><a href="https://github.com/Spandyie/Agentic-Context-Engineering" target="_blank">Agentic-Context-Engineering</a></div>
-          <div class="project-desc">Implementation of the ACE loop — a continuous chat system that builds a live JSONL Playbook, using FAISS semantic retrieval and reflection to grow smarter with every interaction.</div>
-          <div class="project-tags"><span class="tag">Streamlit</span><span class="tag">FAISS</span><span class="tag">OpenAI</span><span class="tag">Python</span></div>
-        </div>
-        <div class="project-card">
-          <div class="project-title"><a href="https://github.com/Spandyie/ParticleFilter" target="_blank">ParticleFilter</a> ⭐7</div>
-          <div class="project-desc">Sequential Monte Carlo particle filter for predicting remaining structural life using the Pari–Erdogan fatigue law. Applied to structural health monitoring (SHM).</div>
-          <div class="project-tags"><span class="tag">Python</span><span class="tag">Bayesian</span><span class="tag">SHM</span></div>
-        </div>
-        <div class="project-card">
-          <div class="project-title"><a href="https://github.com/Spandyie/Deep-SHM" target="_blank">Deep-SHM</a> ⭐4</div>
-          <div class="project-desc">Applying deep neural networks to Structural Health Monitoring — a domain previously limited by scarce labeled data. Explores transfer learning and data augmentation strategies.</div>
-          <div class="project-tags"><span class="tag">PyTorch</span><span class="tag">Deep Learning</span><span class="tag">SHM</span></div>
-        </div>
-        <div class="project-card">
-          <div class="project-title"><a href="https://github.com/Spandyie/miniature-fortnight" target="_blank">miniature-fortnight</a></div>
-          <div class="project-desc">Twitter data-mining pipeline with LSTM-based text generation. Trained on tweet corpora and served via a Flask web app — one of the earlier explorations in NLP.</div>
-          <div class="project-tags"><span class="tag">LSTM</span><span class="tag">NLP</span><span class="tag">Flask</span><span class="tag">Python</span></div>
-        </div>
-        <div class="project-card">
-          <div class="project-title"><a href="https://github.com/Spandyie/automatic-waffle" target="_blank">automatic-waffle</a> ⭐2</div>
-          <div class="project-desc">Genetic Algorithm library written in Modern C++. Clean, header-based implementation designed for optimization problems, built for performance and extensibility.</div>
-          <div class="project-tags"><span class="tag">C++</span><span class="tag">Optimization</span><span class="tag">Algorithms</span></div>
-        </div>
+  <!-- ls projects -->
+  <div class="prompt-line">
+    <span class="ps1">guest@spandan <em>~</em> $</span>
+    <span class="cmd">ls ./projects</span>
+  </div>
+  <div class="output">
+    <div class="projects-grid">
+      <div class="project-card">
+        <div class="project-title"><a href="https://github.com/Spandyie/agent-as-judge" target="_blank">agent-as-judge</a></div>
+        <div class="project-desc">Multi-agent document evaluation pipeline. Three specialized AI agents — Researcher, Analyzer, Judge — score your docs against industry benchmarks. Runs fully local via Ollama.</div>
+        <div class="project-tags"><span class="tag">CrewAI</span><span class="tag">Ollama</span><span class="tag">Llama 3.1</span><span class="tag">Python</span></div>
+      </div>
+      <div class="project-card">
+        <div class="project-title"><a href="https://github.com/Spandyie/Agentic-Context-Engineering" target="_blank">Agentic-Context-Engineering</a></div>
+        <div class="project-desc">Implementation of the ACE loop — a continuous chat system that builds a live JSONL Playbook, using FAISS semantic retrieval and reflection to grow smarter with every interaction.</div>
+        <div class="project-tags"><span class="tag">Streamlit</span><span class="tag">FAISS</span><span class="tag">OpenAI</span><span class="tag">Python</span></div>
+      </div>
+      <div class="project-card">
+        <div class="project-title"><a href="https://github.com/Spandyie/ParticleFilter" target="_blank">ParticleFilter</a> ⭐7</div>
+        <div class="project-desc">Sequential Monte Carlo particle filter for predicting remaining structural life using the Pari–Erdogan fatigue law. Applied to structural health monitoring (SHM).</div>
+        <div class="project-tags"><span class="tag">Python</span><span class="tag">Bayesian</span><span class="tag">SHM</span></div>
+      </div>
+      <div class="project-card">
+        <div class="project-title"><a href="https://github.com/Spandyie/Deep-SHM" target="_blank">Deep-SHM</a> ⭐4</div>
+        <div class="project-desc">Applying deep neural networks to Structural Health Monitoring — a domain previously limited by scarce labeled data. Explores transfer learning and data augmentation strategies.</div>
+        <div class="project-tags"><span class="tag">PyTorch</span><span class="tag">Deep Learning</span><span class="tag">SHM</span></div>
+      </div>
+      <div class="project-card">
+        <div class="project-title"><a href="https://github.com/Spandyie/miniature-fortnight" target="_blank">miniature-fortnight</a></div>
+        <div class="project-desc">Twitter data-mining pipeline with LSTM-based text generation. Trained on tweet corpora and served via a Flask web app — one of the earlier explorations in NLP.</div>
+        <div class="project-tags"><span class="tag">LSTM</span><span class="tag">NLP</span><span class="tag">Flask</span><span class="tag">Python</span></div>
+      </div>
+      <div class="project-card">
+        <div class="project-title"><a href="https://github.com/Spandyie/automatic-waffle" target="_blank">automatic-waffle</a> ⭐2</div>
+        <div class="project-desc">Genetic Algorithm library written in Modern C++. Clean, header-based implementation designed for optimization problems, built for performance and extensibility.</div>
+        <div class="project-tags"><span class="tag">C++</span><span class="tag">Optimization</span><span class="tag">Algorithms</span></div>
       </div>
     </div>
+  </div>
 
-    <hr class="divider">
+  <hr class="divider">
 
-    <!-- contact -->
-    <div class="prompt-line">
-      <span class="ps1">guest@spandan <em>~</em> $</span>
-      <span class="cmd">cat contact.txt</span>
+  <!-- contact -->
+  <div class="prompt-line">
+    <span class="ps1">guest@spandan <em>~</em> $</span>
+    <span class="cmd">cat contact.txt</span>
+  </div>
+  <div class="output">
+    <div class="contact-row">
+      <div class="contact-item"><span>⌥</span><a href="https://github.com/Spandyie" target="_blank">github.com/Spandyie</a></div>
+      <div class="contact-item"><span>◈</span><a href="https://spandyie.github.io" target="_blank">spandyie.github.io</a></div>
+      <div class="contact-item"><span>∂</span><a href="https://scholar.google.com/citations?user=WGEmEPcAAAAJ&hl=en&authuser=1" target="_blank">Google Scholar</a></div>
     </div>
-    <div class="output">
-      <div class="contact-row">
-        <div class="contact-item"><span class="icon">⌥</span><a href="https://github.com/Spandyie" target="_blank">github.com/Spandyie</a></div>
-        <div class="contact-item"><span class="icon">◈</span><a href="https://spandyie.github.io" target="_blank">spandyie.github.io</a></div>
-        <div class="contact-item"><span class="icon">∂</span><a href="https://scholar.google.com/citations?user=WGEmEPcAAAAJ&hl=en&authuser=1" target="_blank">Google Scholar</a></div>
-      </div>
-    </div>
+  </div>
 
-    <!-- send_message -->
-    <div class="prompt-line">
-      <span class="ps1">guest@spandan <em>~</em> $</span>
-      <span class="cmd">send_message --to spandan</span>
-    </div>
-    <div class="output">
-      <form class="contact-form" id="contact-form">
-        <input type="text" name="name" placeholder="your name" required autocomplete="off">
-        <input type="email" name="email" placeholder="your email" required autocomplete="off">
-        <textarea name="message" placeholder="your message" required></textarea>
-        <button type="submit" id="form-btn">[ TRANSMIT ]</button>
-        <span id="form-status"></span>
-      </form>
-    </div>
+  <!-- send_message -->
+  <div class="prompt-line">
+    <span class="ps1">guest@spandan <em>~</em> $</span>
+    <span class="cmd">send_message --to spandan</span>
+  </div>
+  <div class="output">
+    <form class="contact-form" id="contact-form">
+      <input type="text" name="name" placeholder="your name" required autocomplete="off">
+      <input type="email" name="email" placeholder="your email" required autocomplete="off">
+      <textarea name="message" placeholder="your message" required></textarea>
+      <button type="submit" id="form-btn">[ TRANSMIT ]</button>
+      <span id="form-status"></span>
+    </form>
+  </div>
 
-    <!-- Interactive CLI -->
-    <div class="input-row">
-      <span class="ps1">guest@spandan ~ $</span>
-      <input id="cli-input" type="text" autocomplete="off" spellcheck="false" placeholder="type a command…" aria-label="terminal input">
-    </div>
-    <div id="cli-response"></div>
+  <!-- Interactive CLI -->
+  <div class="input-row">
+    <span class="ps1">guest@spandan ~ $</span>
+    <input id="cli-input" type="text" autocomplete="off" spellcheck="false" placeholder="type a command…" aria-label="terminal input">
+  </div>
+  <div id="cli-response"></div>
 
-  </div><!-- /#main -->
-</div><!-- /.terminal -->
+</div><!-- /#main -->
 
 <script>
-  // ── Clock ──
-  function updateClock() {
-    const now = new Date();
-    document.getElementById('clock').textContent =
-      now.toISOString().replace('T',' ').slice(0,19) + ' UTC';
-  }
-  updateClock(); setInterval(updateClock, 1000);
-
   // ── Boot sequence ──
   const bootLines = [
     { text: 'SPANDAN-OS v2.1.0 (tty1)', cls: 'bright' },
@@ -418,7 +207,7 @@
     { text: '[    0.048] Loading identity.conf', cls: '' },
     { text: '[    0.112] Mounting filesystem: /projects ... OK', cls: '' },
     { text: '[    0.189] Mounting filesystem: /skills ... OK', cls: '' },
-    { text: '[    0.234] Mounting filesystem: /contact ... OK', cls: '' },
+    { text: '[    0.234] Mounting filesystem: /blog ... OK', cls: '' },
     { text: '[    0.301] Starting curiosity daemon ... OK', cls: '' },
     { text: '[    0.388] Checking for bugs ... 0 critical, 3 interesting', cls: 'warn' },
     { text: '[    0.421] Network: connected to internet', cls: '' },
@@ -434,7 +223,9 @@
       setTimeout(() => {
         bootEl.style.display = 'none';
         document.getElementById('main').style.display = 'block';
-        animateSkillBars();
+        document.querySelectorAll('.skill-fill').forEach(el => {
+          setTimeout(() => { el.style.width = el.dataset.w + '%'; }, 200);
+        });
       }, 200);
       return;
     }
@@ -447,23 +238,17 @@
   }
   addBootLine();
 
-  // ── Skill bar animation ──
-  function animateSkillBars() {
-    document.querySelectorAll('.skill-fill').forEach(el => {
-      setTimeout(() => { el.style.width = el.dataset.w + '%'; }, 200);
-    });
-  }
-
   // ── Interactive CLI ──
   const commands = {
-    help: () => `available: help · whoami · skills · projects · contact · clear · matrix`,
+    help: () => `available: help · whoami · skills · projects · blog · contact · clear · matrix`,
     whoami: () => `Dr. Spandan Mishra — Data Science Leader & AI Researcher @ Palo Alto Networks. Ph.D. Industrial Engineering.`,
     skills: () => `Python/PyTorch · LLMs/Agents · Bayesian Stats · Deep Learning · C++ · Data Engineering`,
-    projects: () => `agent-as-judge · Agentic-Context-Engineering · ParticleFilter · Deep-SHM · miniature-fortnight · automatic-waffle\nscroll up to see details`,
-    contact: () => `email@spandanm.com | github.com/Spandyie | spandyie.github.io | Google Scholar`,
+    projects: () => `agent-as-judge · Agentic-Context-Engineering · ParticleFilter · Deep-SHM · miniature-fortnight · automatic-waffle`,
+    blog: () => { window.location.href = '/blog/'; return 'navigating to ~/blog ...'; },
+    contact: () => `github.com/Spandyie | spandyie.github.io | Google Scholar`,
     clear: () => { document.getElementById('cli-response').textContent = ''; return null; },
     matrix: () => { startMatrix(); return 'initiating…'; },
-    ls: () => `projects  skills  contact  README.md`,
+    ls: () => `projects  skills  blog  contact  README.md`,
     pwd: () => `/home/spandan`,
     date: () => new Date().toString(),
     uname: () => `SPANDAN-OS v2.1.0 Darwin arm64`,
@@ -473,7 +258,6 @@
 
   const input = document.getElementById('cli-input');
   const response = document.getElementById('cli-response');
-
   input.addEventListener('keydown', e => {
     if (e.key !== 'Enter') return;
     const val = input.value.trim().toLowerCase().split(' ')[0];
@@ -506,12 +290,10 @@
       });
       if (res.ok) {
         status.style.color = 'var(--green)';
-        status.textContent = '> message transmitted. I\'ll respond soon.';
+        status.textContent = "> message transmitted. I'll respond soon.";
         e.target.reset();
         btn.textContent = '[ SENT ]';
-      } else {
-        throw new Error();
-      }
+      } else { throw new Error(); }
     } catch {
       status.style.color = '#ff4444';
       status.textContent = '> transmission failed. try again.';
@@ -535,15 +317,13 @@
       ctx.fillRect(0,0,canvas.width,canvas.height);
       ctx.fillStyle = '#00ff41';
       ctx.font = '14px monospace';
-      drops.forEach((y,i) => {
-        ctx.fillText(chars[Math.floor(Math.random()*chars.length)], i*16, y*16);
-        if (y*16 > canvas.height && Math.random() > 0.975) drops[i] = 0;
-        drops[i]++;
+      drops.forEach((y,x) => {
+        ctx.fillText(chars[Math.floor(Math.random()*chars.length)], x*16, y*16);
+        if (y*16 > canvas.height && Math.random() > 0.975) drops[x] = 0;
+        drops[x]++;
       });
     }, 40);
     canvas.addEventListener('click', () => { clearInterval(id); canvas.remove(); });
     setTimeout(() => { clearInterval(id); canvas.remove(); }, 8000);
   }
 </script>
-</body>
-</html>
