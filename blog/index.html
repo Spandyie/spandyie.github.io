@@ -1,0 +1,30 @@
+---
+layout: default
+title: Blog // Dr. Spandan Mishra
+---
+
+<div class="prompt-line">
+  <span class="ps1">guest@spandan <em>~</em> $</span>
+  <span class="cmd">ls _posts/ --sort=date</span>
+</div>
+
+<div class="output">
+  {% if site.posts.size == 0 %}
+    <p style="color: var(--green-dim);">no posts yet. check back soon.</p>
+  {% else %}
+    <ul class="post-list">
+      {% for post in site.posts %}
+        <li class="post-list-item">
+          <span class="post-list-date">{{ post.date | date: "%Y-%m-%d" }}</span>
+          <a class="post-list-title" href="{{ post.url }}">{{ post.title }}</a>
+          <span class="post-list-arrow">→</span>
+        </li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+</div>
+
+<div class="prompt-line" style="margin-top: 1rem;">
+  <span class="ps1">guest@spandan <em>~</em> $</span>
+  <span class="cmd" style="opacity:0.4;">_</span>
+</div>

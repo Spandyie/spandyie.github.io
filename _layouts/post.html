@@ -1,0 +1,26 @@
+---
+layout: default
+---
+
+<div class="prompt-line">
+  <span class="ps1">guest@spandan <em>~/blog</em> $</span>
+  <span class="cmd">cat {{ page.slug }}.md</span>
+</div>
+
+<div class="output">
+  <div class="post-header">
+    <div class="post-title">{{ page.title }}</div>
+    <div class="post-meta">
+      {{ page.date | date: "%Y-%m-%d" }}
+      {% for tag in page.tags %}
+        <span class="tag">{{ tag }}</span>
+      {% endfor %}
+    </div>
+  </div>
+  <hr class="divider">
+  <div class="post-body">
+    {{ content }}
+  </div>
+  <hr class="divider">
+  <p><a href="/blog/">← back to _posts/</a></p>
+</div>

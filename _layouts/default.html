@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="{{ page.description | default: site.description }}">
+  <title>{{ page.title | default: site.title }}</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --green: #00ff41;
+      --green-dim: #00cc33;
+      --green-glow: rgba(0, 255, 65, 0.4);
+      --bg: #0a0a0a;
+    }
+
+    html, body {
+      height: 100%;
+      background: var(--bg);
+      color: var(--green);
+      font-family: 'Share Tech Mono', 'Courier New', monospace;
+      overflow-x: hidden;
+    }
+
+    /* CRT scanlines */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: repeating-linear-gradient(
+        0deg, transparent, transparent 2px,
+        rgba(0,0,0,0.15) 2px, rgba(0,0,0,0.15) 4px
+      );
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    /* CRT vignette */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(ellipse at center, transparent 60%, rgba(0,0,0,0.7) 100%);
+      pointer-events: none;
+      z-index: 9998;
+    }
+
+    @keyframes flicker {
+      0%, 95%, 100% { opacity: 1; }
+      96% { opacity: 0.92; }
+      97% { opacity: 1; }
+      98% { opacity: 0.95; }
+    }
+    body { animation: flicker 8s infinite; }
+
+    /* ─── LAYOUT ─── */
+    .terminal {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem 4rem;
+      min-height: 100vh;
+    }
+
+    /* ─── TOPBAR ─── */
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--green-dim);
+      padding-bottom: 0.5rem;
+      margin-bottom: 2rem;
+      font-size: 0.75rem;
+      color: var(--green-dim);
+    }
+    .topbar .dot {
+      display: inline-block; width: 8px; height: 8px;
+      border-radius: 50%; background: var(--green);
+      box-shadow: 0 0 6px var(--green-glow); margin-right: 4px;
+    }
+    .topbar nav { display: flex; gap: 1.5rem; }
+    .topbar nav a {
+      color: var(--green-dim);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+    .topbar nav a:hover,
+    .topbar nav a.active { color: var(--green); text-shadow: 0 0 6px var(--green-glow); }
+
+    /* ─── SHARED PROMPT STYLES ─── */
+    .prompt-line {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.5rem;
+      margin-bottom: 0.4rem;
+    }
+    .ps1 { color: var(--green-dim); white-space: nowrap; flex-shrink: 0; }
+    .ps1 em { color: var(--green); font-style: normal; }
+    .cmd { color: var(--green); }
+
+    .output {
+      margin: 0.5rem 0 1.8rem 1.5rem;
+      line-height: 1.9;
+      font-size: 0.92rem;
+    }
+    .output p { color: #b0d4b0; }
+    .output a { color: var(--green); text-decoration: none; border-bottom: 1px dashed var(--green-dim); }
+    .output a:hover { text-shadow: 0 0 8px var(--green-glow); }
+
+    .divider {
+      border: none;
+      border-top: 1px dashed var(--green-dim);
+      margin: 2rem 0;
+      opacity: 0.4;
+    }
+
+    @keyframes blink { 50% { opacity: 0; } }
+    .cursor {
+      display: inline-block; width: 0.6em; height: 1.1em;
+      background: var(--green); vertical-align: text-bottom;
+      animation: blink 1s step-end infinite;
+    }
+
+    /* ─── SCROLLBAR ─── */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--green-dim); }
+
+    /* ─── BLOG POST STYLES ─── */
+    .post-header { margin: 2.5rem 0 1.5rem; }
+    .post-title { font-size: 1.4rem; color: var(--green); text-shadow: 0 0 10px var(--green-glow); margin-bottom: 0.4rem; }
+    .post-meta { font-size: 0.78rem; color: var(--green-dim); }
+    .post-meta .tag { border: 1px solid var(--green-dim); padding: 1px 6px; margin-left: 0.4rem; font-size: 0.7rem; }
+
+    .post-body { color: #b0d4b0; line-height: 1.9; font-size: 0.92rem; }
+    .post-body h1, .post-body h2, .post-body h3 { color: var(--green); margin: 1.5rem 0 0.5rem; }
+    .post-body h2::before { content: '## '; color: var(--green-dim); }
+    .post-body h3::before { content: '### '; color: var(--green-dim); }
+    .post-body p { margin-bottom: 1rem; }
+    .post-body a { color: var(--green); border-bottom: 1px dashed var(--green-dim); text-decoration: none; }
+    .post-body code {
+      background: #0f2010; border: 1px solid var(--green-dim);
+      padding: 1px 5px; font-size: 0.85em; color: var(--green);
+    }
+    .post-body pre {
+      background: #0a120a; border: 1px solid var(--green-dim);
+      padding: 1rem; overflow-x: auto; margin: 1rem 0;
+    }
+    .post-body pre code { background: none; border: none; padding: 0; }
+    .post-body ul, .post-body ol { padding-left: 1.5rem; margin-bottom: 1rem; }
+    .post-body blockquote {
+      border-left: 2px solid var(--green-dim);
+      padding-left: 1rem; color: #7aaa7a;
+      margin: 1rem 0;
+    }
+    .post-body strong { color: var(--green); }
+
+    /* ─── BLOG LIST STYLES ─── */
+    .post-list { list-style: none; }
+    .post-list-item {
+      display: grid;
+      grid-template-columns: 120px 1fr auto;
+      gap: 1rem;
+      align-items: baseline;
+      padding: 0.4rem 0;
+      border-bottom: 1px solid #0f2010;
+      font-size: 0.88rem;
+    }
+    .post-list-item:hover .post-list-title { text-shadow: 0 0 8px var(--green-glow); }
+    .post-list-date { color: var(--green-dim); flex-shrink: 0; }
+    .post-list-title { color: var(--green); text-decoration: none; }
+    .post-list-title:hover { text-shadow: 0 0 8px var(--green-glow); }
+    .post-list-arrow { color: var(--green-dim); flex-shrink: 0; }
+
+    @media (max-width: 540px) {
+      .post-list-item { grid-template-columns: 1fr; gap: 0.1rem; }
+      .post-list-arrow { display: none; }
+      .topbar nav { gap: 0.8rem; }
+    }
+  </style>
+</head>
+<body>
+<div class="terminal">
+  <div class="topbar">
+    <div>
+      <span class="dot"></span>SPANDAN-OS v2.1.0 &nbsp;|&nbsp;
+      <nav>
+        <a href="/" {% if page.url == '/' %}class="active"{% endif %}>~/home</a>
+        <a href="/blog/" {% if page.url contains '/blog' %}class="active"{% endif %}>~/blog</a>
+      </nav>
+    </div>
+    <div id="clock"></div>
+  </div>
+
+  {{ content }}
+
+</div>
+<script>
+  function updateClock() {
+    const now = new Date();
+    document.getElementById('clock').textContent =
+      now.toISOString().replace('T',' ').slice(0,19) + ' UTC';
+  }
+  updateClock(); setInterval(updateClock, 1000);
+</script>
+{{ page.extra_js }}
+</body>
+</html>
