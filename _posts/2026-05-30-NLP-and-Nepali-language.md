@@ -96,7 +96,7 @@ Spoken Nepali — the language of homes, markets, and social media — differs i
 
 **Register gap**: the four-level verb system means that the formal register of news text and the intimate register of conversation are nearly different morphological systems. A model that learns one doesn't generalize to the other.
 
-**Code-switching**: Nepali speakers mix freely with Hindi, especially in the Tarai, and with English everywhere. A typical message might be: *"ramro cha, aaja meet garne?"* — Nepali structure, Devanagari script optional, mixed vocabulary. Standard Nepali NLP pipelines treat the English tokens as unknown or noise.
+**Code-switching**: Nepali speakers mix freely with Hindi, especially in the Tarai, and with English everywhere. A typical message might be: *"logo change gareko?"* — Nepali structure, Devanagari script optional, mixed vocabulary. Standard Nepali NLP pipelines treat the English tokens as unknown or noise.
 
 **Romanized Nepali**: A significant proportion of digital Nepali is typed in Roman script. *"kasto cha?"*, *"khana khayo?"*, *"k gardai hunuhunchha?"* — this text exists in enormous quantities on WhatsApp, Facebook, and SMS, and is almost entirely absent from training sets. Most multilingual models have never seen Devanagari-Roman transliteration as input.
 
