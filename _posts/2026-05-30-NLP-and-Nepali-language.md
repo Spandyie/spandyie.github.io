@@ -6,18 +6,17 @@ tags: [nepali, nlp, morphology, indic, low-resource]
 description: "Why Nepali is harder for computers than its 17 million speakers suggest, and where the field stands today."
 ---
 
-Modern spoken Nepali has largely collapsed the hraswa–dirgha distinction — the difference between short vowels (ह्रस्व: इ, उ) and their long counterparts (दीर्घ: ई, ऊ) that Sanskrit maintained carefully. The three sibilants Nepali inherited from Sanskrit (स, श, ष) — what teachers used to call the "patalo" and "moto" s-sounds — have similarly merged in most speakers' ears into effectively one or two sounds. Native speakers confuse बर्षि and बीर्गन्ज because the ikar and iikar sound identical; ष and श are used interchangeably in informal writing. The orthography carries complexity the ear no longer tracks.
+Modern spoken Nepali has largely collapsed the hraswa–dirgha distinction — the difference between short vowels (ह्रस्व: इ, उ) and their long counterparts (दीर्घ: ई, ऊ) that Sanskrit maintained carefully. The three sibilants Nepali inherited from Sanskrit (स, श, ष) — what teachers used to call the "patalo" and "moto" s-sounds — have similarly merged in most speakers' ears into effectively one or two sounds. Writers cannot agree whether the city of Birgunj should be बिरगञ्ज or बीरगञ्ज — both spellings circulate freely, because the ikar (इ) and iikar (ई) sound identical and nothing in the ear decides between them; ष and श are likewise used interchangeably in informal writing. The orthography carries complexity the ear no longer tracks.
 
 This is the opposite of the Sanskrit NLP problem. Sanskrit's challenge is that sandhi *merges* words on the page that need to be split — the text is ambiguous. Nepali's problem is that the *writing system is more complex than the speech it represents*. A model sees three distinct characters (स/श/ष) and two vowel lengths (ि/ी) that are largely interchangeable in practice, and tries to learn signal from what is mostly noise.
 
 To make the collapse concrete, here are minimal pairs that were once phonemically distinct and are now functionally homophones for most speakers:
 
-| Short form | Long form | Distinct in Sanskrit? | Distinct in spoken Nepali? |
-|------------|-----------|----------------------|----------------------------|
+| Short vowel | Long vowel | Different meanings? | Heard as distinct today? |
+|-------------|------------|---------------------|--------------------------|
 | दिन (*din*, day) | दीन (*dīn*, poor/wretched) | Yes | No |
-| सुख (*sukh*, happiness) | सूख (*sūkh*, dryness) | Yes | No |
-| शिव (*śiva*, Shiva) | शीश (*śīṣa*, head/top) | Yes | No |
-| बुद्धि (*buddhi*, intellect) | वृद्धि (*vṛddhi*, increase) | Yes | Partially |
+| कुल (*kul*, lineage/clan) | कूल (*kūl*, riverbank) | Yes | No |
+| चिनी (*cinī*, sugar) | चीनी (*cīnī*, Chinese) | Yes | Rarely |
 
 A reader sees the difference. A speaker rarely produces it. A model trained on web text has to decide whether the variation it observes between ि and ी is a meaningful morphological signal or just inconsistent orthography. Almost always, it's the latter.
 
@@ -138,6 +137,20 @@ print(final[0])
 The output is grammatical, uses the ordinary register, and gets the postposition *-को* right. Pass in romanized input — *"kasto cha?"* — and the model produces garbage. Pass in a sentence in the intimate register and you'll get the ordinary register back, because that's what dominates the training data.
 
 **Sangraha** (AI4Bharat, 2024) is the most carefully curated Indic pretraining corpus to date — deduplicated, quality-filtered, covering 22 languages including Nepali ([arXiv:2403.06350](https://arxiv.org/abs/2403.06350)). If you are building a Nepali-focused model from scratch, this is where you start.
+
+---
+
+## The Nepali-Specific Effort
+
+Alongside the multilingual models, a smaller body of Nepali-first work has accumulated over the last few years — almost all of it built on formal text.
+
+The encoder lineage runs through three citable monolingual models. **NepBERTa** (`NepBERTa/NepBERTa`, AACL-IJCNLP 2022) was pretrained on roughly 0.8 billion words scraped from 36 Nepali news sites — about three times the largest previously available public corpus — and shipped alongside **Nep-gLUE**, a four-task benchmark covering NER, POS tagging, content classification, and categorical pair similarity ([aclanthology 2022.aacl-short.34](https://aclanthology.org/2022.aacl-short.34/)). **distilbert-base-nepali** (`Sakonii/distilbert-base-nepali`) is a lighter 67M-parameter DistilBERT trained on 13M+ Nepali text sequences. **NepaliBERT** (`Rajan/NepaliBERT`) rounds out the trio. Every one of these is trained on news and web prose — the careful literary register again.
+
+In 2024, **NLUE** (Nepali Language Understanding Evaluation, [arXiv:2411.19244](https://arxiv.org/abs/2411.19244)) expanded Nep-gLUE from 4 tasks to 12, giving the field its first broad NLU benchmark for the language. Its headline result is a quiet rebuke to the monolingual effort: a multilingual model, **mDeBERTa-v3**, outperformed the dedicated Nepali BERTs on most tasks. The lesson echoes the thesis of this post — for surface-level understanding, cross-lingual transfer from a large multilingual model beats a small model trained only on Nepali. The monolingual models' real advantage is size and inference cost, not accuracy.
+
+On the generative side, **NepaliGPT** ([arXiv:2506.16399](https://arxiv.org/abs/2506.16399), 2025) is the first language model built specifically to *generate* Nepali. It is GPT-2-scale — not a frontier LLM — but the contribution that lasts is the data it released: a ~9.3 GB "Devanagari Corpus" (≈383 million tokens) and the first Nepali question-answering benchmark of 4,296 QA pairs. Among the broad Indic instruction-tuned LLMs, **Navarasa 2.0** (`Telugu-LLM-Labs/Indic-gemma-7b-finetuned-sft-Navarasa-2.0`, a Gemma-7B fine-tune across 15 Indian languages) explicitly includes Nepali, though general-purpose multilingual LLMs still treat it as a minor language.
+
+Speech has moved too. Google's OpenSLR releases — **SLR43** (high-quality TTS data) and **SLR54** (~157,000 ASR utterances) — remain the backbone datasets, and recent work fine-tuning **Whisper** on Nepali reported word-error-rate reductions of up to 36% on the small model and 24% on the medium ([arXiv:2411.12587](https://arxiv.org/abs/2411.12587), 2024). As with the text models, the audio is read speech from clean recordings — not the code-switched, intimate-register Nepali of actual conversation. The data keeps growing; it just keeps growing in the same formal direction.
 
 ---
 
