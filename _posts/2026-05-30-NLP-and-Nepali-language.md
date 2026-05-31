@@ -167,6 +167,28 @@ The gaps are specific:
 
 The most significant gap isn't modeling — multilingual transformers handle the surface forms well enough for many applications. The gap is **annotated data for tasks that require linguistic depth**: morphological analysis across registers, NER in code-switched text, speech systems for informal spoken Nepali.
 
+---
+
+## Where the Gains Are
+
+The encouraging part is that these gaps are addressable, and several of them turn on the same lever: **transliteration**. Most of the Nepali that exists digitally but never reaches a model is Romanized, and bridging Roman to Devanagari is a tractable problem with tooling already partly in place.
+
+**Transliteration as a front-end.** The fastest win is not a new Nepali model but a transliteration layer in front of the Devanagari ones that already work. AI4Bharat's **IndicXlit** already supports Nepali (`nep`) for Roman↔Devanagari conversion, trained on the Aksharantar dataset's roughly 2.4 million Nepali transliteration pairs ([arXiv:2205.03018](https://arxiv.org/abs/2205.03018)). Feed *"kasto cha?"* through a transliterator and hand *कस्तो छ?* to IndicTrans2 or muRIL, and a pipeline that produced garbage now produces something usable. The catch is that Aksharantar's pairs are dictionary-style, word-level transliterations; the open work is extending them to **noisy, sentence-level, colloquial romanization** — the actual WhatsApp register, with its inconsistent spellings and English splices.
+
+**A romanization benchmark that includes Nepali.** The standard evaluation set for South Asian romanization, Google's **Dakshina** ([LREC 2020](https://aclanthology.org/2020.lrec-1.294/)), covers twelve languages — and Nepali is not one of them. That absence is itself the opportunity: a Dakshina-style Nepali set, pairing romanized text with native-script ground truth, would give the field something to measure against. Right now there is nothing to score a Romanized-Nepali model on.
+
+**Authentic data over synthetic.** The romanized-Nepali work that does exist leans on synthetic data — one 2024 study generates training text with GPT-4 and fine-tunes an open LLM with LoRA ([SGAI 2024](https://doi.org/10.1007/978-3-031-77915-2_23)), and Sangraha's romanized portion was produced by machine-transliterating tens of billions of tokens through IndicXlit ([arXiv:2403.06350](https://arxiv.org/abs/2403.06350)). Synthetic data is a reasonable bootstrap, but it inherits the formal register of its source. A corpus of **real** user-generated romanized Nepali — the messy, code-switched kind — is what would let anyone check whether the synthetic-trained models actually generalize.
+
+**Synthetic generation as a documented recipe.** Where authentic data is scarce, Sangraha shows the scalable fallback: translate English Wikipedia into Indic languages with IndicTrans2 (~90B tokens), then romanize the result with IndicXlit (~72B tokens). It is a citable blueprint for manufacturing Nepali pretraining data when collection isn't feasible ([arXiv:2403.06350](https://arxiv.org/abs/2403.06350)).
+
+**Code-switching beyond language ID.** Nepali-English code-mixing already has an anchor: the **LinCE** benchmark includes a Nepali-English track for language identification, NER, POS, and sentiment ([arXiv:2005.04322](https://arxiv.org/abs/2005.04322)). Hindi-English, by contrast, has the richer **GLUECoS** suite ([arXiv:2004.12376](https://arxiv.org/abs/2004.12376)) — which excludes Nepali entirely. Extending Nepali code-mixed evaluation from token-level identification into the harder understanding tasks GLUECoS pioneered for Hindi-English is a clear, bounded next step.
+
+**Spontaneous speech, not read speech.** Every Nepali ASR resource — OpenSLR, the Whisper fine-tunes — is built on read or prompted audio. There is no public corpus of spontaneous, conversational, code-switched Nepali speech. Collecting one is unglamorous, but it is the single thing standing between current ASR and the language people actually speak.
+
+None of these require a research breakthrough. They require data collection and careful engineering against tools that, for Nepali, mostly already exist — they just haven't been pointed at the informal language yet.
+
+---
+
 There is a quiet irony here. Sanskrit attracted serious computational attention partly through cultural prestige — it is a language scholars have cared about for millennia, and that care generated funding, datasets, and research infrastructure. Nepali, spoken by millions of living people who need working tools right now, has attracted less. The field's priorities don't always align with where the practical need is highest.
 
 The models that exist work reasonably on literary Nepali — the careful Devanagari of newspapers and government documents. The language people actually type on their phones — Romanized, code-switched, intimate-register — is still largely invisible to them. Until training data catches up to how Nepali is spoken and written in practice, the gap between what the orthography shows and what the ear hears will keep surfacing as model error.
