@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "NLP and the Nepali Language"
-date: 2026-04-17
+date: 2026-05-30
 tags: [nepali, nlp, morphology, indic, low-resource]
 description: "Why Nepali is harder for computers than its 17 million speakers suggest, and where the field stands today."
 ---
