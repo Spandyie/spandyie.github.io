@@ -67,4 +67,6 @@ where $a$, $b$, and $c$ are constants. This ensures every direction in the gradi
 
 ## In Practice
 
-Newton-Schulz wins over SVD because GPUs excel at matmuls, not eigendecomposition. Since Muon only works on 2D matrices, reshape higher-dimensional tensors: a 4D conv kernel `(64,32,3,3)` becomes `(64,288)`, gets orthogonalized, then reshapes back. This simple trick lets you apply Muon to any layer.
+Newton-Schulz wins over SVD because GPUs excel at matmuls, not eigendecomposition. Since Muon only works on 2D matrices, reshape higher-dimensional tensors: a 4D conv kernel `(64,32,3,3)` becomes `(64,288)`, gets orthogonalized, then reshapes back.
+
+In practice Muon doesn't run on every parameter. It's applied to the 2D hidden weight matrices, while the embeddings, the output head, and the 1D parameters (biases, LayerNorm gains) are left to AdamW. Those layers don't have the low-rank structure Muon is designed to fix, so orthogonalization buys nothing there. The result is a hybrid: Muon where it helps, AdamW everywhere else.
