@@ -65,4 +65,6 @@ $$X_{t+1} = a \cdot X + b \cdot X \cdot (X^T X) + c \cdot X \cdot (X^T X)^2$$
 
 where $a$, $b$, and $c$ are constants. This ensures every direction in the gradient gets equal weight in the update — rare directions with small singular values are no longer drowned out by dominant ones.
 
-The Newton-Schulz algorithm is cheaper than SVD because it only requires matrix multiplication, which can be run efficiently on GPUs. Another important thing to note is that Muon only applies to 2D matrices, so if you have a higher-dimensional tensor, you need to reshape it to 2D first. For convolutions, which might be a 4D tensor `(64,32,3,3)`, you need to reshape this as `(64,288)`, orthogonalize it using NS, and reshape it back to the original form.
+## In Practice
+
+Newton-Schulz wins over SVD because GPUs excel at matmuls, not eigendecomposition. Since Muon only works on 2D matrices, reshape higher-dimensional tensors: a 4D conv kernel `(64,32,3,3)` becomes `(64,288)`, gets orthogonalized, then reshapes back. This simple trick lets you apply Muon to any layer.
