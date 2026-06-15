@@ -8,6 +8,7 @@ tags: [optimization, machine-learning, nlp, muon]
 Stochastic gradient descent with momentum can be written as follows
 
 $$m_t = \beta m_{t-1} + (1-\beta) \nabla L$$
+
 $$\theta_t = \theta_{t-1} - \alpha m_t$$
 
 Or in pseudocode:
