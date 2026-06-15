@@ -17,9 +17,9 @@ Loop Until Convergence
 	average_momentum = β × last_momentum + (1-β) × Gradient
 	parameter = parameter - learning_rate × average_momentum
 ```
-In practice the above update, i.e. the change in parameter with respect to input, is always low rank, i.e. a few parameters undergo a huge update while the rest update very little. The idea in MUON is that you still update the parameter along the similar direction, while not squashing the rare direction, so that everyone gets an equal chance. Give the rare direction a fair shot, which would otherwise have been lost owing to their low singular values.
+In practice this update — the change applied to a weight matrix — is almost always low rank, i.e. a few directions undergo a huge update while the rest barely move. The idea in Muon (**M**oment**U**m **O**rthogonalized by **N**ewton-schulz) is that you still update along the dominant direction, while not squashing the rare directions, so that everyone gets an equal chance. Give the rare direction a fair shot, which would otherwise have been lost owing to their low singular values.
 
-The issue is that few directions with large singular values dominate the update, while the directions with smaller singular values get drowned out. An ideal optimization should optimize all the dimensions regardless of the eigenvalues along the most important dimension. This is exactly what Muon optimizer does; the idea is that instead of using the momentum in its full ranked form, wouldn't it make sense to extract the sign function, which can be written as:
+The issue is that a few directions with large singular values dominate the update, while the directions with smaller singular values get drowned out. An ideal optimizer should move along every dimension regardless of its singular value. This is exactly what Muon does; the idea is that instead of using the momentum in its full ranked form, wouldn't it make sense to extract the sign function, which can be written as:
 
 $$\text{Sign}(M) = U V^T$$
 
@@ -32,7 +32,7 @@ In the equation above, $U$ and $V$ are orthonormal matrices and $\Sigma$ is the 
 
 ## Muon Algorithm
 
-Muon uses Nestrov momentum which has an additional look ahead step. Instead of orthogonalizing raw momentum, Muon first projects one step forward along the momentum direction and evaluates the gradient from there. This gives a more informed update direction. Here is what the algorithm looks like:
+Muon uses Nesterov momentum, which adds a look-ahead step. Instead of orthogonalizing the raw momentum, Muon first projects one step forward along the momentum direction and evaluates the gradient from there. This gives a more informed update direction. Here is what the algorithm looks like:
 
 ```
 B0 = 0
@@ -70,3 +70,9 @@ where $a$, $b$, and $c$ are constants. This ensures every direction in the gradi
 Newton-Schulz wins over SVD because GPUs excel at matmuls, not eigendecomposition. Since Muon only works on 2D matrices, reshape higher-dimensional tensors: a 4D conv kernel `(64,32,3,3)` becomes `(64,288)`, gets orthogonalized, then reshapes back.
 
 In practice Muon doesn't run on every parameter. It's applied to the 2D hidden weight matrices, while the embeddings, the output head, and the 1D parameters (biases, LayerNorm gains) are left to AdamW. Those layers don't have the low-rank structure Muon is designed to fix, so orthogonalization buys nothing there. The result is a hybrid: Muon where it helps, AdamW everywhere else.
+
+One last detail: because the orthogonalized update has all singular values pushed to ~1, its magnitude no longer depends on the gradient scale — it only depends on the shape of the matrix. So the update is scaled by roughly $\sqrt{\max(d_{in}, d_{out})}$ to keep it comparable to an AdamW step. Without this, Muon's learning rate wouldn't transfer across layers of different sizes.
+
+---
+
+*Muon was introduced by Keller Jordan et al. (2024). See the [original writeup](https://kellerjordan.github.io/posts/muon/) for the tuned Newton-Schulz coefficients and benchmark results.*
