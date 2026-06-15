@@ -7,8 +7,8 @@ tags: [optimization, machine-learning, nlp, muon]
 
 Stochastic gradient descent with momentum can be written as follows
 
-$$\text{average\_momentum} = \beta \times \text{last\_momentum} + (1-\beta) \times \text{Gradient}$$
-$$\text{parameter} = \text{parameter} - \text{learning\_rate} \times \text{average\_momentum}$$
+$$m_t = \beta m_{t-1} + (1-\beta) \nabla L$$
+$$\theta_t = \theta_{t-1} - \alpha m_t$$
 
 Or in pseudocode:
 ```
@@ -26,7 +26,7 @@ For those of you who have done singular value decomposition, this formulation mi
 
 $$M = U \Sigma V^T$$ 
 
-In the equation above, $U$ and $V$ are two orthonormal matrices and $\Sigma$ is the diagonal matrix of singular values. The idea with the sign function is to squeeze the singular values to 1. Hence the sign function lets you use what matters from the matrix and use it for the parameter update. 
+In the equation above, $U$ and $V$ are orthonormal matrices and $\Sigma$ is the diagonal matrix of singular values. The sign function squashes all singular values to 1, letting you use what matters from the matrix for parameter updates. 
 
 
 ## Muon Algorithm
@@ -52,8 +52,8 @@ Newton-Schulz is basically an approach to orthogonalise a 2D vector in a cheap, 
 Here is what SVD does 
 $$M = U \cdot \Sigma \cdot V^T$$
 
-Now by some mathematical trick, if you can squash all the singular values to 1, here is what the above equation would look like
-$$\text{sign}(M) = U \cdot I \cdot V^T = UV^T$$
+Now by some mathematical trick, if you can squash all the singular values to 1:
+$$\text{sign}(M) = UV^T$$
 
 Newton-Schulz is an iterative approach to calculate $UV^T$ without doing SVD. The algorithm starts with:
 
