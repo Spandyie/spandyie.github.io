@@ -36,15 +36,18 @@ Muon uses Nesterov momentum, which adds a look-ahead step. Instead of orthogonal
 
 ```
 B0 = 0
+scale = sqrt(max(d_in, d_out))   # fixed per matrix, from its shape
 for t in time:
     gradient = get_gradient(loss)
-    B[t] = mu * B[t-1] +  gradient
-    g̃ = mu * B[t] + gradient # the Nesterov "look-ahead"
-    O[t] = NewtonSchulz(g̃)
-    Parameter[t] = parameter[t-1] - learning_rate * O[t]
+    B[t] = mu * B[t-1] + gradient
+    g̃ = mu * B[t] + gradient      # the Nesterov "look-ahead"
+    O[t] = NewtonSchulz(g̃)        # all singular values now ≈ 1
+    Parameter[t] = parameter[t-1] - learning_rate * scale * O[t]
 
 return parameter[t]
 ```
+
+Notice where `scale` lives. It comes *after* Newton-Schulz, never before — the scaling only makes sense once the singular values have been flattened to 1. And it's a constant per weight matrix, computed once from the layer's shape, not something that changes over time. The split is clean: **Newton-Schulz sets the direction, `learning_rate * scale` sets the size.** Why that `scale` factor is needed is covered below.
 
 ## Newton-Schulz
 
@@ -71,7 +74,13 @@ Newton-Schulz wins over SVD because GPUs excel at matmuls, not eigendecompositio
 
 In practice Muon doesn't run on every parameter. It's applied to the 2D hidden weight matrices, while the embeddings, the output head, and the 1D parameters (biases, LayerNorm gains) are left to AdamW. Those layers don't have the low-rank structure Muon is designed to fix, so orthogonalization buys nothing there. The result is a hybrid: Muon where it helps, AdamW everywhere else.
 
-One last detail: because the orthogonalized update has all singular values pushed to ~1, its magnitude no longer depends on the gradient scale — it only depends on the shape of the matrix. So the update is scaled by roughly $\sqrt{\max(d_{in}, d_{out})}$ to keep it comparable to an AdamW step. Without this, Muon's learning rate wouldn't transfer across layers of different sizes.
+## Why the Scaling Step?
+
+This is the part that's easy to miss. Normal optimizers set the step size from the gradient — big gradient, big step. Muon throws the gradient's size away; that *is* the orthogonalization trick. Every update comes out "unit-sized" regardless of how big the gradient was.
+
+But "unit-sized" doesn't mean the same thing for a small layer and a big one. Once all singular values are 1, the only thing left that affects the update's size is the matrix's shape. So a 1024×1024 layer and a 4096×4096 layer get nudged by different amounts per weight — even though you only set *one* learning rate. The rate that's right for your small layers is wrong for your big ones, and training gets unstable or slow.
+
+The fix is to multiply the orthogonalized update by $\sqrt{\max(d_{in}, d_{out})}$. This re-normalizes every layer so each weight moves by a comparable amount, no matter its shape — and it's tuned so the per-weight step roughly matches what AdamW would give, which is why you can reuse familiar learning rates. In real implementations you'll often see it folded into a single constant like `0.2 * sqrt(max(d_in, d_out))`, or absorbed into a per-layer learning rate.
 
 ---
 
