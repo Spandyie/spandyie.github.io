@@ -22,5 +22,29 @@ layout: default
     {{ content }}
   </div>
   <hr class="divider">
+
+  <div class="prompt-line">
+    <span class="ps1">guest@spandan <em>~/blog</em> $</span>
+    <span class="cmd">./comments.sh --thread {{ page.slug }}</span>
+  </div>
+  <div class="giscus-wrap">
+    <script src="https://giscus.app/client.js"
+            data-repo="Spandyie/spandyie.github.io"
+            data-repo-id="R_kgDON6PzLw"
+            data-category="Announcements"
+            data-category-id="DIC_kwDON6PzL84C_O8p"
+            data-mapping="pathname"
+            data-strict="0"
+            data-reactions-enabled="1"
+            data-emit-metadata="0"
+            data-input-position="bottom"
+            data-theme="transparent_dark"
+            data-lang="en"
+            crossorigin="anonymous"
+            async>
+    </script>
+  </div>
+
+  <hr class="divider">
   <p><a href="/blog/">← back to _posts/</a></p>
 </div>
