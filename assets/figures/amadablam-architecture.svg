@@ -1,0 +1,181 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="660" viewBox="0 0 1120 660" font-family="'Nunito','Quicksand','Trebuchet MS','Segoe UI',sans-serif">
+<defs>
+<filter id="soft" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="1.5" stdDeviation="1.8" flood-color="#8A8078" flood-opacity="0.30"/></filter>
+<marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 1 L 9 5 L 0 9 z" fill="#2E2A26"/></marker>
+<marker id="arrowv" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 1 L 9 5 L 0 9 z" fill="#8577C4"/></marker>
+</defs>
+<rect width="1120" height="660" fill="#FDFCF8"/>
+<text x="560.0" y="42.0" font-family="'Nunito','Quicksand','Trebuchet MS','Segoe UI',sans-serif" font-size="23" font-weight="700" fill="#2E2A26" text-anchor="middle">Ama Dablam  ·  322M linear/dense hybrid</text>
+<text x="560.0" y="66.0" font-family="'Nunito','Quicksand','Trebuchet MS','Segoe UI',sans-serif" font-size="13.5" font-weight="500" fill="#7A736B" text-anchor="middle">12 linear-attention layers with per-head decay, interleaved with 2 full-softmax layers</text>
+<rect x="60.0" y="112.0" width="196.0" height="52.0" rx="16" fill="#FFFFFF" stroke="#BDB6AE" stroke-width="2.0" filter="url(#soft)"/>
+<text x="158.0" y="134.0" font-family="Lohit Devanagari, Noto Sans Devanagari, Annapurna SIL, sans-serif" font-size="15" font-weight="700" fill="#2E2A26" text-anchor="middle">नेपालको राजधानी</text>
+<text x="158.0" y="152.0" font-family="'Nunito','Quicksand','Trebuchet MS','Segoe UI',sans-serif" font-size="11" font-weight="500" fill="#7A736B" text-anchor="middle">token IDs  ·  T ≤ 8192</text>
+<rect x="292.0" y="112.0" width="150.0" height="52.0" rx="14" fill="#FFFFFF" stroke="#BDB6AE" stroke-width="2.0" filter="url(#soft)"/>
+<text x="367.0" y="134.0" font-family="'Nunito','Quicksand','Trebuchet MS','Segoe UI',sans-serif" font-size="14" font-weight="700" fill="#2E2A26" text-anchor="middle">wte</text>
+<text x="367.0" y="152.0" font-family="'DejaVu Sans Mono','Menlo',monospace" font-size="10.5" font-weight="500" fill="#7A736B" text-anchor="middle">16384 × 1280 · bf16</text>
+<rect x="478.0" y="112.0" width="150.0" height="52.0" rx="14" fill="#DCD6F0" stroke="#8577C4" stroke-width="2.0" filter="url(#soft)"/>
+<text x="553.0" y="134.0" font-family="'Nunito','Quicksand','Trebuchet MS','Segoe UI',sans-serif" font-size="13.5" font-weight="700" fill="#2E2A26" text-anchor="middle">RMSNorm → x₀</text>
+<text x="553.0" y="152.0" font-family="'Nunito','Quicksand','Trebuchet MS','Segoe UI',sans-serif" font-size="10.5" font-weight="500" fill="#7A736B" text-anchor="middle">residual anchor</text>
+<line x1="258.0" y1="138.0" x2="288.0" y2="138.0" stroke="#2E2A26" stroke-width="2.0" stroke-linecap="round" marker-end="url(#arrow)"/>
+<line x1="444.0" y1="138.0" x2="474.0" y2="138.0" stroke="#2E2A26" stroke-width="2.0" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M 628 138 H 664 V 200 H 160.0 V 230" fill="none" stroke="#8577C4" stroke-width="2.0" stroke-linecap="round" stroke-dasharray="5 4" marker-end="url(#arrowv)"/>
+<text x="658.0" y="191.0" font-family="'Nunito','Quicksand','Trebuchet MS','Segoe UI',sans-serif" font-size="11.5" font-weight="600" fill="#8577C4" text-anchor="end">μᵢ · x₀ injected into every layer</text>
+<text x="976.0" y="224.0" font-family="'Nunito','Quicksand','Trebuchet MS','Segoe UI',sans-serif" font-size="12" font-weight="600" fill="#7A736B" text-anchor="end">14 token-mixing layers</text>
+<rect x="144.0" y="236.0" width="52.0" height="104.0" rx="12" fill="#CFE0F5" stroke="#4E7FBF" stroke-width="2.0" filter="url(#soft)"/>
+<text x="170.0" y="258.0" font-family="'Nunito','Quicksand','Trebuchet MS','Segoe UI',sans-serif" font-size="13.5" font-weight="700" fill="#4E7FBF" text-anchor="middle">L1</text>
+<rect x="155.0" y="285.0" width="4.2" height="20.0" rx="1.6" fill="#4E7FBF" opacity="0.55"/>
+<rect x="161.4" y="291.0" width="4.2" height="14.0" rx="1.6" fill="#4E7FBF" opacity="0.55"/>
+<rect x="167.8" y="295.5" width="4.2" height="9.5" rx="1.6" fill="#4E7FBF" opacity="0.55"/>
+<rect x="174.2" y="299.0" width="4.2" height="6.0" rx="1.6" fill="#4E7FBF" opacity="0.55"/>
+<rect x="180.6" y="301.5" width="4.2" height="3.5" rx="1.6" fill="#4E7FBF" opacity="0.55"/>
+<text x="170.0" y="324.0" font-family="'Nunito','Quicksand','Trebuchet MS','Segoe UI',sans-serif" font-size="11.5" font-weight="700" fill="#4E7FBF" text-anchor="middle">γₕ</text>
+<circle cx="170.0" cy="356" r="5.2" fill="#F6DFA8" stroke="#C79A3C" stroke-width="1.6"/>
+<rect x="204.0" y="236.0" width="52.0" height="104.0" rx="12" fill="#CFE0F5" stroke="#4E7FBF" stroke-width="2.0" filter="url(#soft)"/>
+<text x="230.0" y="258.0" font-family="'Nunito','Quicksand','Trebuchet MS','Segoe UI',sans-serif" font-size="13.5" font-weight="700" fill="#4E7FBF" text-anchor="middle">L2</text>
+<rect x="215.0" y="285.0" width="4.2" height="20.0" rx="1.6" fill="#4E7FBF" opacity="0.55"/>
+<rect x="221.4" y="291.0" width="4.2" height="14.0" rx="1.6" fill="#4E7FBF" opacity="0.55"/>
+<rect x="227.8" y="295.5" width="4.2" height="9.5" rx="1.6" fill="#4E7FBF" opacity="0.55"/>
+<rect x="234.2" y="299.0" width="4.2" height="6.0" rx="1.6" fill="#4E7FBF" opacity="0.55"/>
+<rect x="240.6" y="301.5" width="4.2" height="3.5" rx="1.6" fill="#4E7FBF" opacity="0.55"/>
+<text x="230.0" y="324.0" font-family="'Nunito','Quicksand','Trebuchet MS','Segoe UI',sans-serif" font-size="11.5" font-weight="700" fill="#4E7FBF" text-anchor="middle">γₕ</text>
+<rect x="264.0" y="236.0" width="52.0" height="104.0" rx="12" fill="#CFE0F5" stroke="#4E7FBF" stroke-width="2.0" filter="url(#soft)"/>
+<text x="290.0" y="258.0" font-family="'Nunito','Quicksand','Trebuchet MS','Segoe UI',sans-serif" font-size="13.5" font-weight="700" fill="#4E7FBF" text-anchor="middle">L3</text>
+<rect x="275.0" y="285.0" width="4.2" height="20.0" rx="1.6" fill="#4E7FBF" opacity="0.55"/>
+<rect x="281.4" y="291.0" width="4.2" height="14.0" rx="1.6" fill="#4E7FBF" opacity="0.55"/>
+<rect x="287.8" y="295.5" width="4.2" height="9.5" rx="1.6" fill="#4E7FBF" opacity="0.55"/>
+<rect x="294.2" y="299.0" width="4.2" height="6.0" rx="1.6" fill="#4E7FBF" opacity="0.55"/>
+<rect x="300.6" y="301.5" width="4.2" height="3.5" rx="1.6" fill="#4E7FBF" opacity="0.55"/>
+<text x="290.0" y="324.0" font-family="'Nunito','Quicksand','Trebuchet MS','Segoe UI',sans-serif" font-size="11.5" font-weight="700" fill="#4E7FBF" text-anchor="middle">γₕ</text>
+<circle cx="290.0" cy="356" r="5.2" fill="#F6DFA8" stroke="#C79A3C" stroke-width="1.6"/>
+<rect x="324.0" y="236.0" width="52.0" height="104.0" rx="12" fill="#CFE0F5" stroke="#4E7FBF" stroke-width="2.0" filter="url(#soft)"/>
+<text x="350.0" y="258.0" font-family="'Nunito','Quicksand','Trebuchet MS','Segoe UI',sans-serif" font-size="13.5" font-weight="700" fill="#4E7FBF" text-anchor="middle">L4</text>
+<rect x="335.0" y="285.0" width="4.2" height="20.0" rx="1.6" fill="#4E7FBF" opacity="0.55"/>
+<rect x="341.4" y="291.0" width="4.2" height="14.0" rx="1.6" fill="#4E7FBF" opacity="0.55"/>
+<rect x="347.8" y="295.5" width="4.2" height="9.5" rx="1.6" fill="#4E7FBF" opacity="0.55"/>
+<rect x="354.2" y="299.0" width="4.2" height="6.0" rx="1.6" fill="#4E7FBF" opacity="0.55"/>
+<rect x="360.6" y="301.5" width="4.2" height="3.5" rx="1.6" fill="#4E7FBF" opacity="0.55"/>
+<text x="350.0" y="324.0" font-family="'Nunito','Quicksand','Trebuchet MS','Segoe UI',sans-serif" font-size="11.5" font-weight="700" fill="#4E7FBF" text-anchor="middle">γₕ</text>
+<rect x="384.0" y="236.0" width="52.0" height="104.0" rx="12" fill="#CFE0F5" stroke="#4E7FBF" stroke-width="2.0" filter="url(#soft)"/>
+<text x="410.0" y="258.0" font-family="'Nunito','Quicksand','Trebuchet MS','Segoe UI',sans-serif" font-size="13.5" font-weight="700" fill="#4E7FBF" text-anchor="middle">L5</text>
+<rect x="395.0" y="285.0" width="4.2" height="20.0" rx="1.6" fill="#4E7FBF" opacity="0.55"/>
+<rect x="401.4" y="291.0" width="4.2" height="14.0" rx="1.6" fill="#4E7FBF" opacity="0.55"/>
+<rect x="407.8" y="295.5" width="4.2" height="9.5" rx="1.6" fill="#4E7FBF" opacity="0.55"/>
+<rect x="414.2" y="299.0" width="4.2" height="6.0" rx="1.6" fill="#4E7FBF" opacity="0.55"/>
+<rect x="420.6" y="301.5" width="4.2" height="3.5" rx="1.6" fill="#4E7FBF" opacity="0.55"/>
+<text x="410.0" y="324.0" font-family="'Nunito','Quicksand','Trebuchet MS','Segoe UI',sans-serif" font-size="11.5" font-weight="700" fill="#4E7FBF" text-anchor="middle">γₕ</text>
+<circle cx="410.0" cy="356" r="5.2" fill="#F6DFA8" stroke="#C79A3C" stroke-width="1.6"/>
+<rect x="444.0" y="236.0" width="52.0" height="104.0" rx="12" fill="#CFE0F5" stroke="#4E7FBF" stroke-width="2.0" filter="url(#soft)"/>
+<text x="470.0" y="258.0" font-family="'Nunito','Quicksand','Trebuchet MS','Segoe UI',sans-serif" font-size="13.5" font-weight="700" fill="#4E7FBF" text-anchor="middle">L6</text>
+<rect x="455.0" y="285.0" width="4.2" height="20.0" rx="1.6" fill="#4E7FBF" opacity="0.55"/>
+<rect x="461.4" y="291.0" width="4.2" height="14.0" rx="1.6" fill="#4E7FBF" opacity="0.55"/>
+<rect x="467.8" y="295.5" width="4.2" height="9.5" rx="1.6" fill="#4E7FBF" opacity="0.55"/>
+<rect x="474.2" y="299.0" width="4.2" height="6.0" rx="1.6" fill="#4E7FBF" opacity="0.55"/>
+<rect x="480.6" y="301.5" width="4.2" height="3.5" rx="1.6" fill="#4E7FBF" opacity="0.55"/>
+<text x="470.0" y="324.0" font-family="'Nunito','Quicksand','Trebuchet MS','Segoe UI',sans-serif" font-size="11.5" font-weight="700" fill="#4E7FBF" text-anchor="middle">γₕ</text>
+<rect x="504.0" y="236.0" width="52.0" height="104.0" rx="12" fill="#CFE0F5" stroke="#4E7FBF" stroke-width="2.0" filter="url(#soft)"/>
+<text x="530.0" y="258.0" font-family="'Nunito','Quicksand','Trebuchet MS','Segoe UI',sans-serif" font-size="13.5" font-weight="700" fill="#4E7FBF" text-anchor="middle">L7</text>
+<rect x="515.0" y="285.0" width="4.2" height="20.0" rx="1.6" fill="#4E7FBF" opacity="0.55"/>
+<rect x="521.4" y="291.0" width="4.2" height="14.0" rx="1.6" fill="#4E7FBF" opacity="0.55"/>
+<rect x="527.8" y="295.5" width="4.2" height="9.5" rx="1.6" fill="#4E7FBF" opacity="0.55"/>
+<rect x="534.2" y="299.0" width="4.2" height="6.0" rx="1.6" fill="#4E7FBF" opacity="0.55"/>
+<rect x="540.6" y="301.5" width="4.2" height="3.5" rx="1.6" fill="#4E7FBF" opacity="0.55"/>
+<text x="530.0" y="324.0" font-family="'Nunito','Quicksand','Trebuchet MS','Segoe UI',sans-serif" font-size="11.5" font-weight="700" fill="#4E7FBF" text-anchor="middle">γₕ</text>
+<circle cx="530.0" cy="356" r="5.2" fill="#F6DFA8" stroke="#C79A3C" stroke-width="1.6"/>
+<rect x="564.0" y="236.0" width="52.0" height="104.0" rx="12" fill="#FAD3C4" stroke="#D2705A" stroke-width="2.0" filter="url(#soft)"/>
+<text x="590.0" y="258.0" font-family="'Nunito','Quicksand','Trebuchet MS','Segoe UI',sans-serif" font-size="13.5" font-weight="700" fill="#D2705A" text-anchor="middle">L8</text>
+<path d="M 577.0 283 L 577.0 305 L 603.0 305 z" fill="#D2705A" opacity="0.55"/>
+<line x1="577.0" y1="283.0" x2="603.0" y2="283.0" stroke="#FDFCF8" stroke-width="0.9" opacity="0.8"/>
+<line x1="577.0" y1="290.3" x2="603.0" y2="290.3" stroke="#FDFCF8" stroke-width="0.9" opacity="0.8"/>
+<line x1="577.0" y1="297.7" x2="603.0" y2="297.7" stroke="#FDFCF8" stroke-width="0.9" opacity="0.8"/>
+<line x1="577.0" y1="305.0" x2="603.0" y2="305.0" stroke="#FDFCF8" stroke-width="0.9" opacity="0.8"/>
+<text x="590.0" y="324.0" font-family="'Nunito','Quicksand','Trebuchet MS','Segoe UI',sans-serif" font-size="10" font-weight="700" fill="#D2705A" text-anchor="middle">dense</text>
+<rect x="624.0" y="236.0" width="52.0" height="104.0" rx="12" fill="#CFE0F5" stroke="#4E7FBF" stroke-width="2.0" filter="url(#soft)"/>
+<text x="650.0" y="258.0" font-family="'Nunito','Quicksand','Trebuchet MS','Segoe UI',sans-serif" font-size="13.5" font-weight="700" fill="#4E7FBF" text-anchor="middle">L9</text>
+<rect x="635.0" y="285.0" width="4.2" height="20.0" rx="1.6" fill="#4E7FBF" opacity="0.55"/>
+<rect x="641.4" y="291.0" width="4.2" height="14.0" rx="1.6" fill="#4E7FBF" opacity="0.55"/>
+<rect x="647.8" y="295.5" width="4.2" height="9.5" rx="1.6" fill="#4E7FBF" opacity="0.55"/>
+<rect x="654.2" y="299.0" width="4.2" height="6.0" rx="1.6" fill="#4E7FBF" opacity="0.55"/>
+<rect x="660.6" y="301.5" width="4.2" height="3.5" rx="1.6" fill="#4E7FBF" opacity="0.55"/>
+<text x="650.0" y="324.0" font-family="'Nunito','Quicksand','Trebuchet MS','Segoe UI',sans-serif" font-size="11.5" font-weight="700" fill="#4E7FBF" text-anchor="middle">γₕ</text>
+<circle cx="650.0" cy="356" r="5.2" fill="#F6DFA8" stroke="#C79A3C" stroke-width="1.6"/>
+<rect x="684.0" y="236.0" width="52.0" height="104.0" rx="12" fill="#CFE0F5" stroke="#4E7FBF" stroke-width="2.0" filter="url(#soft)"/>
+<text x="710.0" y="258.0" font-family="'Nunito','Quicksand','Trebuchet MS','Segoe UI',sans-serif" font-size="13.5" font-weight="700" fill="#4E7FBF" text-anchor="middle">L10</text>
+<rect x="695.0" y="285.0" width="4.2" height="20.0" rx="1.6" fill="#4E7FBF" opacity="0.55"/>
+<rect x="701.4" y="291.0" width="4.2" height="14.0" rx="1.6" fill="#4E7FBF" opacity="0.55"/>
+<rect x="707.8" y="295.5" width="4.2" height="9.5" rx="1.6" fill="#4E7FBF" opacity="0.55"/>
+<rect x="714.2" y="299.0" width="4.2" height="6.0" rx="1.6" fill="#4E7FBF" opacity="0.55"/>
+<rect x="720.6" y="301.5" width="4.2" height="3.5" rx="1.6" fill="#4E7FBF" opacity="0.55"/>
+<text x="710.0" y="324.0" font-family="'Nunito','Quicksand','Trebuchet MS','Segoe UI',sans-serif" font-size="11.5" font-weight="700" fill="#4E7FBF" text-anchor="middle">γₕ</text>
+<rect x="744.0" y="236.0" width="52.0" height="104.0" rx="12" fill="#CFE0F5" stroke="#4E7FBF" stroke-width="2.0" filter="url(#soft)"/>
+<text x="770.0" y="258.0" font-family="'Nunito','Quicksand','Trebuchet MS','Segoe UI',sans-serif" font-size="13.5" font-weight="700" fill="#4E7FBF" text-anchor="middle">L11</text>
+<rect x="755.0" y="285.0" width="4.2" height="20.0" rx="1.6" fill="#4E7FBF" opacity="0.55"/>
+<rect x="761.4" y="291.0" width="4.2" height="14.0" rx="1.6" fill="#4E7FBF" opacity="0.55"/>
+<rect x="767.8" y="295.5" width="4.2" height="9.5" rx="1.6" fill="#4E7FBF" opacity="0.55"/>
+<rect x="774.2" y="299.0" width="4.2" height="6.0" rx="1.6" fill="#4E7FBF" opacity="0.55"/>
+<rect x="780.6" y="301.5" width="4.2" height="3.5" rx="1.6" fill="#4E7FBF" opacity="0.55"/>
+<text x="770.0" y="324.0" font-family="'Nunito','Quicksand','Trebuchet MS','Segoe UI',sans-serif" font-size="11.5" font-weight="700" fill="#4E7FBF" text-anchor="middle">γₕ</text>
+<circle cx="770.0" cy="356" r="5.2" fill="#F6DFA8" stroke="#C79A3C" stroke-width="1.6"/>
+<rect x="804.0" y="236.0" width="52.0" height="104.0" rx="12" fill="#CFE0F5" stroke="#4E7FBF" stroke-width="2.0" filter="url(#soft)"/>
+<text x="830.0" y="258.0" font-family="'Nunito','Quicksand','Trebuchet MS','Segoe UI',sans-serif" font-size="13.5" font-weight="700" fill="#4E7FBF" text-anchor="middle">L12</text>
+<rect x="815.0" y="285.0" width="4.2" height="20.0" rx="1.6" fill="#4E7FBF" opacity="0.55"/>
+<rect x="821.4" y="291.0" width="4.2" height="14.0" rx="1.6" fill="#4E7FBF" opacity="0.55"/>
+<rect x="827.8" y="295.5" width="4.2" height="9.5" rx="1.6" fill="#4E7FBF" opacity="0.55"/>
+<rect x="834.2" y="299.0" width="4.2" height="6.0" rx="1.6" fill="#4E7FBF" opacity="0.55"/>
+<rect x="840.6" y="301.5" width="4.2" height="3.5" rx="1.6" fill="#4E7FBF" opacity="0.55"/>
+<text x="830.0" y="324.0" font-family="'Nunito','Quicksand','Trebuchet MS','Segoe UI',sans-serif" font-size="11.5" font-weight="700" fill="#4E7FBF" text-anchor="middle">γₕ</text>
+<rect x="864.0" y="236.0" width="52.0" height="104.0" rx="12" fill="#CFE0F5" stroke="#4E7FBF" stroke-width="2.0" filter="url(#soft)"/>
+<text x="890.0" y="258.0" font-family="'Nunito','Quicksand','Trebuchet MS','Segoe UI',sans-serif" font-size="13.5" font-weight="700" fill="#4E7FBF" text-anchor="middle">L13</text>
+<rect x="875.0" y="285.0" width="4.2" height="20.0" rx="1.6" fill="#4E7FBF" opacity="0.55"/>
+<rect x="881.4" y="291.0" width="4.2" height="14.0" rx="1.6" fill="#4E7FBF" opacity="0.55"/>
+<rect x="887.8" y="295.5" width="4.2" height="9.5" rx="1.6" fill="#4E7FBF" opacity="0.55"/>
+<rect x="894.2" y="299.0" width="4.2" height="6.0" rx="1.6" fill="#4E7FBF" opacity="0.55"/>
+<rect x="900.6" y="301.5" width="4.2" height="3.5" rx="1.6" fill="#4E7FBF" opacity="0.55"/>
+<text x="890.0" y="324.0" font-family="'Nunito','Quicksand','Trebuchet MS','Segoe UI',sans-serif" font-size="11.5" font-weight="700" fill="#4E7FBF" text-anchor="middle">γₕ</text>
+<circle cx="890.0" cy="356" r="5.2" fill="#F6DFA8" stroke="#C79A3C" stroke-width="1.6"/>
+<rect x="924.0" y="236.0" width="52.0" height="104.0" rx="12" fill="#FAD3C4" stroke="#D2705A" stroke-width="2.0" filter="url(#soft)"/>
+<text x="950.0" y="258.0" font-family="'Nunito','Quicksand','Trebuchet MS','Segoe UI',sans-serif" font-size="13.5" font-weight="700" fill="#D2705A" text-anchor="middle">L14</text>
+<path d="M 937.0 283 L 937.0 305 L 963.0 305 z" fill="#D2705A" opacity="0.55"/>
+<line x1="937.0" y1="283.0" x2="963.0" y2="283.0" stroke="#FDFCF8" stroke-width="0.9" opacity="0.8"/>
+<line x1="937.0" y1="290.3" x2="963.0" y2="290.3" stroke="#FDFCF8" stroke-width="0.9" opacity="0.8"/>
+<line x1="937.0" y1="297.7" x2="963.0" y2="297.7" stroke="#FDFCF8" stroke-width="0.9" opacity="0.8"/>
+<line x1="937.0" y1="305.0" x2="963.0" y2="305.0" stroke="#FDFCF8" stroke-width="0.9" opacity="0.8"/>
+<text x="950.0" y="324.0" font-family="'Nunito','Quicksand','Trebuchet MS','Segoe UI',sans-serif" font-size="10" font-weight="700" fill="#D2705A" text-anchor="middle">dense</text>
+<rect x="226.0" y="424.0" width="120.0" height="50.0" rx="13" fill="#FFFFFF" stroke="#BDB6AE" stroke-width="2.0" filter="url(#soft)"/>
+<text x="286.0" y="454.0" font-family="'Nunito','Quicksand','Trebuchet MS','Segoe UI',sans-serif" font-size="13.5" font-weight="700" fill="#2E2A26" text-anchor="middle">RMSNorm</text>
+<rect x="378.0" y="424.0" width="190.0" height="50.0" rx="13" fill="#FFFFFF" stroke="#BDB6AE" stroke-width="2.0" filter="url(#soft)"/>
+<text x="473.0" y="446.0" font-family="'Nunito','Quicksand','Trebuchet MS','Segoe UI',sans-serif" font-size="13.5" font-weight="700" fill="#2E2A26" text-anchor="middle">LM head</text>
+<text x="473.0" y="463.0" font-family="'DejaVu Sans Mono','Menlo',monospace" font-size="10.5" font-weight="500" fill="#7A736B" text-anchor="middle">1280 × 16384 · untied</text>
+<line x1="346.0" y1="449.0" x2="374.0" y2="449.0" stroke="#2E2A26" stroke-width="2.0" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="600.0" y="424.0" width="170.0" height="50.0" rx="13" fill="#FFFFFF" stroke="#BDB6AE" stroke-width="2.0" filter="url(#soft)"/>
+<text x="685.0" y="446.0" font-family="'Nunito','Quicksand','Trebuchet MS','Segoe UI',sans-serif" font-size="13.5" font-weight="700" fill="#2E2A26" text-anchor="middle">logit soft-cap</text>
+<text x="685.0" y="463.0" font-family="'DejaVu Sans Mono','Menlo',monospace" font-size="10.5" font-weight="500" fill="#7A736B" text-anchor="middle">15 · tanh(z / 15)</text>
+<line x1="568.0" y1="449.0" x2="596.0" y2="449.0" stroke="#2E2A26" stroke-width="2.0" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="802.0" y="424.0" width="176.0" height="50.0" rx="13" fill="#FFFFFF" stroke="#BDB6AE" stroke-width="2.0" filter="url(#soft)"/>
+<text x="890.0" y="446.0" font-family="'Nunito','Quicksand','Trebuchet MS','Segoe UI',sans-serif" font-size="13.5" font-weight="700" fill="#2E2A26" text-anchor="middle">logits</text>
+<text x="890.0" y="463.0" font-family="'DejaVu Sans Mono','Menlo',monospace" font-size="10.5" font-weight="500" fill="#7A736B" text-anchor="middle">T × 16384</text>
+<line x1="770.0" y1="449.0" x2="798.0" y2="449.0" stroke="#2E2A26" stroke-width="2.0" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M 560.0 374 V 398 H 286 V 420" fill="none" stroke="#2E2A26" stroke-width="2.0" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="700.0" y="496.0" width="300.0" height="138.0" rx="14" fill="#FFFFFF" stroke="#BDB6AE" stroke-width="1.6" stroke-dasharray="6 4"/>
+<text x="714.0" y="520.0" font-family="'Nunito','Quicksand','Trebuchet MS','Segoe UI',sans-serif" font-size="11.5" font-weight="700" fill="#2E2A26" text-anchor="start">per-head decay: heads span γ = 0.70 to 0.91</text>
+<line x1="715" y1="536" x2="730" y2="536" stroke="#9CC0EA" stroke-width="2.4" stroke-linecap="round"/>
+<text x="735.0" y="540.0" font-family="'Nunito','Quicksand','Trebuchet MS','Segoe UI',sans-serif" font-size="10" font-weight="700" fill="#9CC0EA" text-anchor="start">γ 0.70</text>
+<line x1="784.6" y1="536" x2="799.6" y2="536" stroke="#4E7FBF" stroke-width="2.4" stroke-linecap="round"/>
+<text x="804.6" y="540.0" font-family="'Nunito','Quicksand','Trebuchet MS','Segoe UI',sans-serif" font-size="10" font-weight="700" fill="#4E7FBF" text-anchor="start">γ 0.82</text>
+<line x1="854.2" y1="536" x2="869.2" y2="536" stroke="#27548F" stroke-width="2.4" stroke-linecap="round"/>
+<text x="874.2" y="540.0" font-family="'Nunito','Quicksand','Trebuchet MS','Segoe UI',sans-serif" font-size="10" font-weight="700" fill="#27548F" text-anchor="start">γ 0.91</text>
+<line x1="720" y1="608" x2="980" y2="608" stroke="#7A736B" stroke-width="1.2"/>
+<line x1="720" y1="608" x2="720" y2="554" stroke="#7A736B" stroke-width="1.2"/>
+<polyline points="720.0,554.0 728.7,570.2 737.3,581.5 746.0,589.5 754.7,595.0 763.3,598.9 772.0,601.6 780.7,603.6 789.3,604.9 798.0,605.8 806.7,606.5 815.3,606.9 824.0,607.3 832.7,607.5 841.3,607.6 850.0,607.7 858.7,607.8 867.3,607.9 876.0,607.9 884.7,607.9 893.3,608.0 902.0,608.0 910.7,608.0 919.3,608.0 928.0,608.0 936.7,608.0 945.3,608.0 954.0,608.0 962.7,608.0 971.3,608.0 980.0,608.0" fill="none" stroke="#9CC0EA" stroke-width="2.2" stroke-linecap="round"/>
+<polyline points="720.0,554.0 728.7,563.5 737.3,571.3 746.0,577.8 754.7,583.1 763.3,587.5 772.0,591.1 780.7,594.1 789.3,596.5 798.0,598.5 806.7,600.2 815.3,601.6 824.0,602.7 832.7,603.6 841.3,604.4 850.0,605.0 858.7,605.6 867.3,606.0 876.0,606.3 884.7,606.6 893.3,606.9 902.0,607.1 910.7,607.2 919.3,607.4 928.0,607.5 936.7,607.6 945.3,607.6 954.0,607.7 962.7,607.8 971.3,607.8 980.0,607.8" fill="none" stroke="#4E7FBF" stroke-width="2.2" stroke-linecap="round"/>
+<polyline points="720.0,554.0 728.7,558.9 737.3,563.3 746.0,567.3 754.7,571.0 763.3,574.3 772.0,577.3 780.7,580.1 789.3,582.6 798.0,584.9 806.7,587.0 815.3,588.9 824.0,590.6 832.7,592.2 841.3,593.6 850.0,594.9 858.7,596.1 867.3,597.1 876.0,598.1 884.7,599.0 893.3,599.8 902.0,600.5 910.7,601.2 919.3,601.8 928.0,602.4 936.7,602.9 945.3,603.3 954.0,603.8 962.7,604.1 971.3,604.5 980.0,604.8" fill="none" stroke="#27548F" stroke-width="2.2" stroke-linecap="round"/>
+<text x="850.0" y="625.0" font-family="'Nunito','Quicksand','Trebuchet MS','Segoe UI',sans-serif" font-size="10" font-weight="500" fill="#7A736B" text-anchor="middle">tokens back  ·  0 to 30  →</text>
+<rect x="66.0" y="500.0" width="22.0" height="16.0" rx="5" fill="#CFE0F5" stroke="#4E7FBF" stroke-width="1.6"/>
+<text x="98.0" y="513.0" font-family="'Nunito','Quicksand','Trebuchet MS','Segoe UI',sans-serif" font-size="11.5" font-weight="500" fill="#2E2A26" text-anchor="start">linear attention · O(T) chunked kernel · 12 layers</text>
+<rect x="66.0" y="526.0" width="22.0" height="16.0" rx="5" fill="#FAD3C4" stroke="#D2705A" stroke-width="1.6"/>
+<text x="98.0" y="539.0" font-family="'Nunito','Quicksand','Trebuchet MS','Segoe UI',sans-serif" font-size="11.5" font-weight="500" fill="#2E2A26" text-anchor="start">full softmax attention · layers 8 and 14</text>
+<rect x="66.0" y="552.0" width="22.0" height="16.0" rx="5" fill="#F6DFA8" stroke="#C79A3C" stroke-width="1.6"/>
+<text x="98.0" y="565.0" font-family="'Nunito','Quicksand','Trebuchet MS','Segoe UI',sans-serif" font-size="11.5" font-weight="500" fill="#2E2A26" text-anchor="start">value embeddings added to V · 7 odd layers · dim 640</text>
+<rect x="66.0" y="578.0" width="22.0" height="16.0" rx="5" fill="#DCD6F0" stroke="#8577C4" stroke-width="1.6"/>
+<text x="98.0" y="591.0" font-family="'Nunito','Quicksand','Trebuchet MS','Segoe UI',sans-serif" font-size="11.5" font-weight="500" fill="#2E2A26" text-anchor="start">x₀ anchor stream · x ← λᵢ·x + μᵢ·x₀</text>
+<text x="66.0" y="620.0" font-family="'DejaVu Sans Mono','Menlo',monospace" font-size="11" font-weight="500" fill="#7A736B" text-anchor="start">dim 1280 · 10 heads (5 KV, 2:1 GQA) · ctx 8192 · vocab 16384 · 321,782,908 params</text>
+</svg>
