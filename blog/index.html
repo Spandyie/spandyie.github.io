@@ -1,30 +1,48 @@
 ---
 layout: default
-title: Blog // Spandan Mishra
+title: Spandan Mishra // Blog
+description: Technical writing on AI, NLP, deep learning, and data science.
 ---
 
-<div class="prompt-line">
-  <span class="ps1">guest@spandan <em>~</em> $</span>
-  <span class="cmd">ls _posts/ --sort=date</span>
-</div>
+<section style="padding-top:2rem;padding-bottom:1rem;">
+  <div class="container" style="text-align:center;margin-bottom:2rem;">
+    <h1 style="font-family:'Source Serif 4',Georgia,serif;font-size:clamp(1.8rem,5vw,2.6rem);font-weight:700;color:var(--text);margin-bottom:0.3rem;">Blog</h1>
+    <p style="font-size:0.95rem;color:var(--text-dim);max-width:480px;margin:0 auto;line-height:1.65;">
+      Technical writing on AI, NLP for low-resource languages, deep learning optimization, and structural health monitoring.
+    </p>
+  </div>
 
-<div class="output">
-  {% if site.posts.size == 0 %}
-    <p style="color: var(--green-dim);">no posts yet. check back soon.</p>
-  {% else %}
-    <ul class="post-list">
-      {% for post in site.posts %}
-        <li class="post-list-item">
-          <span class="post-list-date">{{ post.date | date: "%Y-%m-%d" }}</span>
-          <a class="post-list-title" href="{{ post.url }}">{{ post.title }}</a>
-          <span class="post-list-arrow">→</span>
-        </li>
+  <div class="container">
+    {% if site.posts.size > 0 %}
+    <ul class="blog-list">
+      {% assign sorted = site.posts | sort: 'date' | reverse %}
+      {% for post in sorted %}
+      <li><a class="blog-item" href="{{ post.url }}">
+        <span class="blog-date">{{ post.date | date: '%b %d, %Y' }}</span>
+        <span class="blog-title">{{ post.title }}</span>
+        <span class="blog-arrow">&rarr;</span>
+      </a></li>
       {% endfor %}
     </ul>
-  {% endif %}
-</div>
 
-<div class="prompt-line" style="margin-top: 1rem;">
-  <span class="ps1">guest@spandan <em>~</em> $</span>
-  <span class="cmd" style="opacity:0.4;">_</span>
-</div>
+    <!-- Featured excerpts -->
+    <div style="border-top:1px solid var(--border);margin:2rem 0;"></div>
+    <div class="label" style="margin-bottom:1rem;font-family:'Source Serif 4',Georgia,serif;font-size:0.85rem;">Latest</div>
+
+    {% assign excerpt_count = 0 %}
+    {% for post in sorted limit:3 %}
+    <article style="border-bottom:1px solid var(--border);padding:1.2rem 0;">
+      <a href="{{ post.url }}" style="text-decoration:none;display:block;height:100%;">
+        <div style="font-size:0.72rem;color:var(--text-muted);margin-bottom:0.3rem;font-family:'Inter',sans-serif;letter-spacing:0.04em;text-transform:uppercase;">{{ post.date | date: '%B %d, %Y' }}</div>
+        <h3 style="font-family:'Source Serif 4',Georgia,serif;font-size:1.15rem;font-weight:600;color:var(--text);margin-bottom:0.4rem;">{{ post.title }}</h3>
+        {% if post.excerpt %}
+        <p style="font-size:0.85rem;color:var(--text-dim);line-height:1.6;margin-bottom:0;">{{ post.excerpt | strip_html | truncatewords:40 }}</p>
+        {% endif %}
+      </a>
+    </article>
+    {% endfor %}
+    {% else %}
+    <p style="font-size:0.92rem;color:var(--text-muted);margin-top:1rem;">No posts yet. Check back soon.</p>
+    {% endif %}
+  </div>
+</section>
