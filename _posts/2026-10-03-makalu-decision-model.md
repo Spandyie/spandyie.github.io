@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Makalu: A 0.6B Decision Model Trained in Pre-, Mid- and Post-Training"
+title: "Makalu - Decision Model"
 date: 2026-10-03
 tags: [language-models, embeddings, agents, calibration, lora]
 ---
