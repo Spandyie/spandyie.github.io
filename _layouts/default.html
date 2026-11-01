@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="{{ page.description | default: site.description }}">
   <meta name="referrer" content="strict-origin-when-cross-origin">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://giscus.app https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://giscus.app; frame-src https://giscus.app;">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://giscus.app https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com https://cdn.jsdelivr.net; img-src 'self' data: https:; connect-src 'self' https://giscus.app; frame-src https://giscus.app;">
   <title>{{ page.title | default: site.title }}</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -86,25 +86,22 @@
       align-items: start;
     }
 
+    /* When photo is hidden, content takes full width */
+    .profile-grid:has(.profile-photo[style*="display:none"]) {
+      grid-template-columns: 1fr;
+    }
+
     .profile-photo {
       width: 150px;
       height: 150px;
       flex-shrink: 0;
     }
 
-    .photo-placeholder {
+    .profile-photo img {
       width: 100%;
       height: 100%;
-      background: var(--surface);
-      border: 2px dashed var(--border);
+      object-fit: cover;
       border-radius: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: var(--text-muted);
-      font-size: 0.75rem;
-      text-align: center;
-      padding: 0.5rem;
     }
 
     .profile-content {
@@ -198,20 +195,23 @@
       gap: 1.5rem;
     }
 
+    /* When thumbnail is hidden, content takes full width */
+    .work-item:has(.work-thumbnail[style*="display:none"]) {
+      grid-template-columns: 1fr;
+    }
+
     .work-thumbnail {
       width: 120px;
       height: 90px;
-      background: var(--surface);
-      border: 1px solid var(--border);
       border-radius: 4px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: var(--text-muted);
-      font-size: 0.7rem;
-      text-align: center;
-      padding: 0.5rem;
+      overflow: hidden;
       flex-shrink: 0;
+    }
+
+    .work-thumbnail img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
     }
 
     .work-content {
@@ -481,6 +481,10 @@
         grid-template-columns: 100px 1fr;
         gap: 1.5rem;
       }
+
+      .profile-grid:has(.profile-photo[style*="display:none"]) {
+        grid-template-columns: 1fr;
+      }
       
       .profile-photo {
         width: 100px;
@@ -497,7 +501,7 @@
       
       .work-thumbnail {
         width: 100%;
-        height: 120px;
+        height: 150px;
       }
     }
   </style>
@@ -505,7 +509,7 @@
   <script>
     window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], displayMath: [['$$', '$$'], ['\\[', '\\]']], processEscapes: true }, svg: { fontCache: 'global' } };
   </script>
-  <script async src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js" integrity="sha384-4FjXyJ3z5Nb6UPa0WBYqrOF5+i0wISHQnlqhMKJdKmfB/CaZLZ8FHV0JthLfVUdH" crossorigin="anonymous"></script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js" integrity="sha384-Wuix6BuhrWbjDBs24bXrjf4ZQ5aFeFWBuKkFekO2t8xFU0iNaLQfp2K6/1Nxveei" crossorigin="anonymous"></script>
 </head>
 <body>
 
