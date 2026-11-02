@@ -99,7 +99,7 @@ None identified.
 ### Personal Information
 - ✅ No phone numbers found
 - ✅ No home addresses found
-- ✅ Email address is placeholder (spandan@example.com) - **TODO: update to real email**
+- ✅ Email address: email@spandanm.com
 - ✅ No social security numbers or financial data
 - ℹ️ Public academic profiles (Scholar, ORCID, GitHub) are intentionally public
 
